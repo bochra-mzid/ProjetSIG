@@ -36,9 +36,10 @@ root.render(
   <BrowserRouter>
     <div>
       <Switch>
-        <Route exact path="/" component={Home}/>
+        <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
-        <Route exact path="/admin" render={(props) => <AdminLayout {...props} />} />
+        <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
+        <Redirect to="/admin/dashboard" />
       </Switch>
     </div>
   </BrowserRouter>
