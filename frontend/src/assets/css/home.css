@@ -1,0 +1,29 @@
+.home{
+    background-image: url("../img/bg.jpg");
+    width: 100vw;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+
+.cover{
+    background-color: rgba(102, 97, 92 ,0.5);
+    z-index: 44;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.home-title{
+    color: white;
+    font-weight: bold;
+    font-size: 3.5em;
+}
+
+.home-logo{
+    width: 150px;
+    height: 150px;
+}
