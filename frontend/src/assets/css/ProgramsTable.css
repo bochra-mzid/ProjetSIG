@@ -1,0 +1,38 @@
+.image-details{
+    height: 200px;
+    margin-bottom: 5%;
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.programs-details-page{
+    padding: 5% 5% 5% 5%;
+    display: flex;
+    flex-direction: column;
+}
+
+.details-title{
+    text-align: center;
+}
+
+.details-description{
+    margin-bottom: 2%;
+}
+.inscriptions-details{
+    text-align: center;
+    margin-top: 2%;
+}
+
+.image-input{
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.div.programs-map{
+    top: auto !important;
+    left: auto !important;
+
+}

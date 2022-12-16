@@ -29,6 +29,7 @@ import AdminLayout from "layouts/Admin.js";
 import Login from "views/Login";
 import Home from "views/Home"
 
+import 'mapbox-gl/dist/mapbox-gl.css';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
