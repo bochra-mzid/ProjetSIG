@@ -43,11 +43,11 @@ import "../assets/css/ProgramsTable.css"
 import BootstrapTable from "react-bootstrap-table-next"
 import paginationFactory from "react-bootstrap-table2-paginator"
 import NewProgram from "../components/NewProgram/NewProgram"
-import Map, {Marker} from 'react-map-gl';
+import Map, { Marker, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
-
-
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import KayakingIcon from '@mui/icons-material/Kayaking';
 // reactstrap components
 import {
   Card,
@@ -73,8 +73,7 @@ const Transition = React.forwardRef(function Transition(
 
 
 function ProgramsTable() {
-  const [programs, setPrograms] = useState([{ 'id': 1, 'title': "prog1", 'description': "Lorem ipsum dolor sit amet. Eum quod placeat sed sequi aliquam qui nihil neque. Aut aperiam ullam aut facere velit est soluta excepturi. Sit aperiam dolores ut consequatur voluptate a corrupti adipisci. Aut fugiat aspernatur est libero alias et facere eaque aut beatae accusantium At impedit rerum et voluptatem deleniti.Voluptas pariatur ut mollitia culpa sed facere provident ut sunt voluptas. A neque veniam sed magni quam est quidem illo eum quisquam accusantium ut omnis reiciendis. Et autem possimus vel corrupti animi et repellendus sint.", 'date': "20/02/2023", "nb_inscriptions": 50, "price": "900", "deadline": "30/01/2023", "capacity": 60 }])
-
+  const [programs, setPrograms] = useState([{ 'id': 1, 'title': "prog1", 'description': "Lorem ipsum dolor sit amet. Eum quod placeat sed sequi aliquam qui nihil neque. Aut aperiam ullam aut facere velit est soluta excepturi. Sit aperiam dolores ut consequatur voluptate a corrupti adipisci. Aut fugiat aspernatur est libero alias et facere eaque aut beatae accusantium At impedit rerum et voluptatem deleniti.Voluptas pariatur ut mollitia culpa sed facere provident ut sunt voluptas. A neque veniam sed magni quam est quidem illo eum quisquam accusantium ut omnis reiciendis. Et autem possimus vel corrupti animi et repellendus sint.", 'date': "20/02/2023", "nb_inscriptions": 50, "price": "900", "deadline": "30/01/2023", "capacity": 60, "locations": [{ "id": 1, name: "houmet souk", duration: "1h", date_debut: "8h", date_fin: "12h", category: "visite", details: "loremipsum", longitude: 10.1815, latitude: 36.8065 }, { "id": 2, name: "houmet souk", duration: "1h", date_debut: "8h", date_fin: "12h", category: "visite", details: "loremipsum", latitude: 33.8212, longitude: 10.8543 }] }])
   const [tourists, setTourists] = useState([{ "name": "wajdi jbali", "phone": 23222564, "statut": "paid" }, { "name": "mouna jlassi", "phone": 55211778, "statut": "not paid" }])
   const [open, setOpen] = React.useState(false);
   const [openNew, setOpenNew] = useState(false)
@@ -82,6 +81,16 @@ function ProgramsTable() {
     "paid": 'paid',
     "not paid": 'not paid',
   };
+  const [viewport, setViewport] = useState({
+    latitude: 47.040182,
+    longitude: 17.071727,
+    zoom: 4,
+  });
+  const [currentPlaceId, setCurrentPlaceId] = useState(null);
+  const [newPlace, setNewPlace] = useState(null);
+  const [title, setTitle] = useState(null);
+  const [desc, setDesc] = useState(null);
+  const [star, setStar] = useState(0);
   const columns = [{
     dataField: 'name',
     text: 'name',
@@ -117,6 +126,10 @@ function ProgramsTable() {
     setOpenNew(true)
   }
 
+  const handleMarkerClick = (id) => {
+    setCurrentPlaceId(id);
+    console.log(id)
+  };
 
   return (
     <>
@@ -197,20 +210,59 @@ function ProgramsTable() {
                                   <GroupsIcon />
                                   Total inscriptions: {prog.nb_inscriptions}
                                 </div>
-                                <h2 className="inscriptions-details">Inscriptions list</h2>
-                                <BootstrapTable keyField='name' data={tourists} columns={columns} pagination={paginationFactory()} filter={filterFactory()} />
+                                
                                 <div style={{ height: '100vh', width: '100%' }}>
                                   <Map
                                     initialViewState={{
-                                      longitude: -122.4,
-                                      latitude: 37.8,
-                                      zoom: 14
+                                      longitude: 10.1815,
+                                      latitude: 36.8065,
+                                      zoom: 10
                                     }}
                                     style={{ width: "90vw", height: "90vh" }}
                                     mapStyle="mapbox://styles/mapbox/streets-v9"
                                     mapboxAccessToken='pk.eyJ1IjoiYm9jaHJhLW16IiwiYSI6ImNsYTgzZ285OTIxeWczcW8zbThrdXptMjQifQ.DZAIWKl3ovOcWwqoB4GpmQ'
-                                  />
+                                  >
+                                    {prog.locations.map((loc) => {
+                                      { console.log(loc.longitude) }
+                                      return (
+                                        <div>
+                                          <Marker
+                                            latitude={loc.latitude}
+                                            longitude={loc.longitude}
+                                            onClick={() => handleMarkerClick(loc.id)}
+                                          >
+                                          </Marker>
+                                          {loc.id === currentPlaceId && (
+                                            <Popup longitude={loc.longitude} latitude={loc.latitude}
+                                              anchor="bottom" onClose={() => setCurrentPlaceId(null)}
+                                              closeButton={true}
+                                              closeOnClick={false}
+                                            >
+                                              <div className="location-card">
+                                                <img src={logo} />
+                                                <div className="location-title">
+                                                  {loc.name}
+                                                </div>
+                                                <div className="location-time-category">
+                                                  <div classname="location-time">
+                                                    <AccessTimeIcon style={{width: "18px"}} />    {loc.date_debut} -- {loc.date_fin}
+                                                  </div>
+                                                  <div classname="location-category">
+                                                    {loc.category}
+                                                  </div></div>
+                                                <div className="location-details">
+                                                  {loc.details}
+                                                </div>
+                                              </div>
+                                              <button>view details</button>
+                                            </Popup>)}
+                                        </div>
+                                      )
+                                    })}
+                                  </Map>
                                 </div>
+                                <h2 className="inscriptions-details">Inscriptions list</h2>
+                                <BootstrapTable keyField='name' data={tourists} columns={columns} pagination={paginationFactory()} filter={filterFactory()} />
                               </div>
                             </Dialog>
                           </td>

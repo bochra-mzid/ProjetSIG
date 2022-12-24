@@ -34,5 +34,20 @@
 .div.programs-map{
     top: auto !important;
     left: auto !important;
+}
 
+.location-title{
+    font-weight: bold;
+}
+
+.location-time-category{
+    display: flex;
+    justify-content: space-between;
+}
+
+.pin-form{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 10px;
 }
