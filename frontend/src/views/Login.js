@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../assets/css/login.css"
 import logo from "../assets/img/logo1.png"
 import { Button } from "reactstrap";
+import {Link} from "react-router-dom"
 export default function Login() {
 
     const [loginEmail, setLoginEmail] = useState("")
@@ -34,6 +35,7 @@ export default function Login() {
                             Sign in
                         </Button>
                     </div>
+                    <div style={{textAlign: "center"}}>you don't have an account ? <Link to="/tourist-registration">Sign up</Link></div>
                     <div className="message">{message}</div>
                 </form>
             </div>
