@@ -30,6 +30,7 @@ import Login from "views/Login";
 import Home from "views/Home"
 
 import 'mapbox-gl/dist/mapbox-gl.css';
+import TouristRegistration from "views/TouristRegistration";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -39,6 +40,7 @@ root.render(
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/tourist-registration" component={TouristRegistration} />
         <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
         <Redirect to="/admin/dashboard" />
       </Switch>
