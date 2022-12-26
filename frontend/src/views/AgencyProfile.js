@@ -69,7 +69,7 @@ function AgencyProfile() {
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
-  const [agency, setAgency] = useState({ "id": 1, "name": "agence x", "email": "agencex@gmail.com", "password": "123", "phone": 25444658, "fb_url": "https://www.facebook.com/bochra.mzid", "insta_url": "", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra posuere elit quis ultrices. Donec ex erat, auctor ut urna nec, maximus tristique libero. Cras quis tortor arcu. Nam hendrerit aliquam turpis, ac placerat eros cursus ut. Aenean hendrerit, mauris ut molestie efficitur, dui tellus dapibus est, vitae volutpat odio neque et dui. Fusce aliquam mauris sit amet dictum pretium. Quisque ac tincidunt elit. Donec ut dignissim dui, vel consectetur lectus.", "city": "Bardo", "zip": 2000, "address": "jsnfsdllflfw,d", "country": "Tunisia" })
+  const [agency, setAgency] = useState({ "id": 1, "name": "agence x", "email": "agencex@gmail.com", "password": "123", "phone": 25444658, "fb_url": "", "insta_url": "", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra posuere elit quis ultrices. Donec ex erat, auctor ut urna nec, maximus tristique libero. Cras quis tortor arcu. Nam hendrerit aliquam turpis, ac placerat eros cursus ut. Aenean hendrerit, mauris ut molestie efficitur, dui tellus dapibus est, vitae volutpat odio neque et dui. Fusce aliquam mauris sit amet dictum pretium. Quisque ac tincidunt elit. Donec ut dignissim dui, vel consectetur lectus.", "city": "Bardo", "zip": 2000, "address": "jsnfsdllflfw,d", "country": "Tunisia" })
   return (
     <>
       <div className="content">
