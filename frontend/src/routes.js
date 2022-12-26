@@ -25,7 +25,7 @@ import ProgramsTable from "views/ProgramsTable";
 import Maps from "views/Map.js";
 import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js";
-
+import AgencyProfile from "views/AgencyProfile.js"
 var routes = [
   {
     path: "/dashboard",
@@ -60,6 +60,13 @@ var routes = [
     name: "User Profile",
     icon: "nc-icon nc-single-02",
     component: UserPage,
+    layout: "/admin"
+  },
+  {
+    path: "/agency-profile",
+    name: "Agency profile",
+    icon: "nc-icon nc-single-02",
+    component: AgencyProfile,
     layout: "/admin"
   },
   {
