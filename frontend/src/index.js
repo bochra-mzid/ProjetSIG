@@ -26,6 +26,8 @@ import "assets/demo/demo.css";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
 
 import AdminLayout from "layouts/Admin.js";
+import TouristLayout from "layouts/Tourist.js";
+
 import Login from "views/Login";
 import Home from "views/Home"
 
@@ -42,7 +44,8 @@ root.render(
         <Route exact path="/login" component={Login} />
         <Route exact path="/tourist-registration" component={TouristRegistration} />
         <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
-        <Redirect to="/admin/dashboard" />
+        <Route path="/tourist" render={(props) => <TouristLayout {...props} />} />
+        <Redirect to="/" />
       </Switch>
     </div>
   </BrowserRouter>
