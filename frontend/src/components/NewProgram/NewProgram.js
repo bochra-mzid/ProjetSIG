@@ -5,22 +5,15 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Paper from '@mui/material/Paper';
 import AddPhotoAlternateIcon from '@mui/icons-material/AddPhotoAlternate';
-import Map, { Marker, Popup } from 'react-map-gl';
+import Map, { Marker, Popup,  GeolocateControl, NavigationControl, } from 'react-map-gl';
 import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import DisabledByDefaultSharpIcon from '@mui/icons-material/DisabledByDefaultSharp';
 import {
     Button,
-    Card,
-    CardHeader,
-    CardBody,
-    CardFooter,
-    CardTitle,
     FormGroup,
     Form,
-    Input,
     Row,
     Col
 } from "reactstrap";
@@ -154,7 +147,6 @@ export default function NewProgram(props) {
                                             id="outlined-multiline-static"
                                             size="small"
                                             onChange={(e) => setProg({ ...prog, price: e.target.value })} />
-
                                     </FormGroup>
                                 </Col>
                             </Row>
@@ -321,6 +313,10 @@ export default function NewProgram(props) {
                                             </Popup>
                                         </>
                                     )}
+                                    <NavigationControl position="top-left" />
+                      <GeolocateControl
+                        position="top-left"
+                        trackUserLocation/>
                                 </Map>
                             </Row>
                             <Row>

@@ -43,11 +43,10 @@ import "../assets/css/ProgramsTable.css"
 import BootstrapTable from "react-bootstrap-table-next"
 import paginationFactory from "react-bootstrap-table2-paginator"
 import NewProgram from "../components/NewProgram/NewProgram"
-import Map, { Marker, Popup } from 'react-map-gl';
+import Map, { Marker, Popup, GeolocateControl, NavigationControl, } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import KayakingIcon from '@mui/icons-material/Kayaking';
 // reactstrap components
 import {
   Card,
@@ -259,6 +258,10 @@ function ProgramsTable() {
                                         </div>
                                       )
                                     })}
+                                    <NavigationControl position="top-left" />
+                      <GeolocateControl
+                        position="top-left"
+                        trackUserLocation/>
                                   </Map>
                                 </div>
                                 <h2 className="inscriptions-details">Inscriptions list</h2>
