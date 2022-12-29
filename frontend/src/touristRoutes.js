@@ -9,6 +9,8 @@ import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js";
 import AgencyProfile from "views/AgencyProfile.js"
 import Agencies from "views/Agencies.js"
+import SearchProgram from "views/SearchProgram"
+
 var routes = [
   {
     path: "/dashboard",
@@ -31,6 +33,13 @@ var routes = [
     name: "Agencies",
     icon: "nc-icon nc-spaceship",
     component: Agencies,
+    layout: "/tourist"
+  },
+  {
+    path: "/searchProgram",
+    name: "Programs",
+    icon: "nc-icon nc-spaceship",
+    component: SearchProgram,
     layout: "/tourist"
   },
   {
