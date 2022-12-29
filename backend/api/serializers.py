@@ -5,7 +5,7 @@ from .models import *
 class TouristSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tourist
-        fields = ['username','email','password','address','phone','date_of_birth']
+        fields = ['username','email','password','nationality','phone','age','language','gender']
 
 
 
