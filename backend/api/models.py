@@ -10,6 +10,8 @@ class Tourist(models.Model):
     address = models.TextField(max_length=100)
     phone = models.IntegerField()
     date_of_birth = models.DateTimeField()
+    def _str_(self):
+        return self.username
 
 class TravelAgency(models.Model):
     username = models.CharField(max_length=50)
@@ -17,6 +19,8 @@ class TravelAgency(models.Model):
     password = models.CharField(max_length=100)
     address = models.TextField(max_length=100)
     phone = models.IntegerField()
-
+    def _str_(self):
+        return self.username
+   
      
     
