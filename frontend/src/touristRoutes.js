@@ -1,5 +1,6 @@
-import Login from "views/Login";
+import TouristLogin from "views/TouristLogin";
 import Dashboard from "views/Dashboard.js";
+import TouristDashboard from "views/TouristDashboard.js";
 import Notifications from "views/Notifications.js";
 import Icons from "views/Icons.js";
 import Typography from "views/Typography.js";
@@ -13,17 +14,18 @@ import SearchProgram from "views/SearchProgram"
 
 var routes = [
   {
-    path: "/dashboard",
-    name: "Dashboard",
+    path: "/dashboard-tourist",
+    name: "User Dashboard",
     icon: "nc-icon nc-bank",
-    component: Dashboard,
+    component: TouristDashboard,
     layout: "/tourist"
   },
+  
 
   {
     path: "/tourist-profile",
     name: "User Profile",
-    icon: "nc-icon nc-spaceship",
+    icon: "nc-icon nc-single-02",
     component: UserPage,
     layout: "/tourist"
   },
@@ -38,7 +40,7 @@ var routes = [
   {
     path: "/searchProgram",
     name: "Programs",
-    icon: "nc-icon nc-spaceship",
+    icon: "nc-icon nc-tile-56",
     component: SearchProgram,
     layout: "/tourist"
   },

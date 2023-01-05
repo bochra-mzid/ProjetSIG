@@ -27,7 +27,7 @@ export default function Login() {
                         <input type="password" className="form-control" placeholder="Enter password" onChange={(e) => { setLoginPassword(e.target.value) }} />
                     </div>
                     <div className="auth-button">
-                        <Link to="/admin/dashboard">
+                        <Link to="/tourist/dashboard-tourist">
                             <Button
                                 className="btn-round"
                                 color="primary"

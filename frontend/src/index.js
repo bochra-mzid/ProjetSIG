@@ -29,6 +29,7 @@ import AdminLayout from "layouts/Admin.js";
 import TouristLayout from "layouts/Tourist.js";
 
 import Login from "views/Login";
+import TouristLogin from "views/TouristLogin";
 import Home from "views/Home"
 
 import 'mapbox-gl/dist/mapbox-gl.css';
@@ -42,6 +43,7 @@ root.render(
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
+        <Route exact path="/tourist-login" component={TouristLogin} />
         <Route exact path="/tourist-registration" component={TouristRegistration} />
         <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
         <Route path="/tourist" render={(props) => <TouristLayout {...props} />} />

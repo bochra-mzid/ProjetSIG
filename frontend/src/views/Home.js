@@ -12,7 +12,7 @@ function Home() {
 
                 <h1 className="home-title">TRAVEL WITH US! </h1>
                 <div>
-                    <Link to="/login">
+                    <Link to="/tourist-login">
                         <Button
                             className="btn-round"
                             color="primary"

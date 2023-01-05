@@ -24,7 +24,7 @@ function Dashboard() {
     <>
       <div className="content">
         <h4>A Propos De <b>We Travel.Tn :</b> </h4>
-          <p><u> <b> We Travel</b></u> est une agence de voyages en ligne Catégorie "A" agréée
+          <p><u> <b> We Travel</b></u> est une agence de voyages en ligne Catégorie A agréée
              par l’office National de tourisme tunisien et membre de la Fédération Tunisienne des agences de voyages (FTAV) 
              et créé par une équipe d’anciens professionnels qui a misé sur une nouvelle formule de tourisme :
               Le client crée son produit voyage. Elle maitrise également la formule classique destinée au client amateur du produit clé en main, 
