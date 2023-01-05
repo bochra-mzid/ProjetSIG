@@ -1,0 +1,158 @@
+.tourist-registration-page{
+    background-color: #51cbce;
+    min-width: 10vw;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.registration-container {
+    width: 90vw;
+    background: #fff;
+    padding: 10px 30px;
+    border-radius: 30px;
+    margin-right: auto;
+    margin-left: auto;
+    height: 97vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .registration-container .title {
+    font-size: 25px;
+    font-weight: bold;
+    position: relative;
+    text-align: center;
+
+  }
+
+  .registration-container .register-form .user-details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px 0 12px 0;
+  }
+  .register-form .user-details .input-box {
+    margin-bottom: 5px;
+    width: calc(100% / 2 - 20px);
+  }
+  .register-form .user-details .input-box .details {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+  }
+  .register-form .user-details .input-box input {
+    height: 45px;
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+    transition: all 0.3 ease;
+  }
+  .register-form .user-details .input-box input:focus,
+  .register-form .user-details .input-box input:valid {
+    border-color: #9b59b6;
+  }
+  .register-form .gendre-details .gendre-title {
+    font-size: 20px;
+    font-weight: 500;
+  }
+  .register-form .gendre-details .catogary {
+    display: flex;
+    width: 80%;
+    margin: 14px 0;
+    justify-content: space-between;
+    height: 20px;
+  }
+  .register-form .gendre-details .catogary label {
+    display: flex;
+    align-items: center;
+  }
+  .gendre-details{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 25px;
+  }
+
+  .register-form .gendre-details .catogary .dot {
+    height: 18px;
+    width: 18px;
+    background: #d9d9d9;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 5px solid transparent;
+  }
+  #dot-1:checked ~ .catogary label .one,
+  #dot-2:checked ~ .catogary label .two,
+  #dot-3:checked ~ .catogary label .three {
+    border-color: #d9d9d9;
+    background: #9b59b6;
+  }
+  
+
+  .register-form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .field{
+    margin: 5px;
+    display: flex;
+    flex-direction: column;
+    }
+  input[type="file"] {
+    display: none;
+  }
+  
+  .custom-file-upload {
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    padding: 6px;
+    cursor: pointer;
+    background: linear-gradient(270deg, #3fa1a9, #79f1a4);
+    margin-bottom: 25px;
+  }
+  
+  .img-wrap{
+    position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%;
+  }
+  .img-upload:before{
+    content: "\f093";
+    font-size: 90px;
+    position: absolute;
+    padding-top: 80px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #63d3a6;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #fff;
+  }
+  .img-upload:hover:before{
+   opacity: 1;
+  }
+
+
+ 
+  
+  
+
+  
