@@ -80,12 +80,12 @@ WSGI_APPLICATION = 'backendSig.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'travelApp',
-        'USER': 'postgres',
-        'PASSWORD': 'salmaensi123',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'travelapp',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        'USER': 'root',
+        'PASSWORD': 'salmaensi',
     }
 }
 
@@ -147,6 +147,5 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 CORS_ORIGIN_WHITELIST = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
+     'http://localhost:3000'
 ]
