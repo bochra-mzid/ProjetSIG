@@ -11,7 +11,16 @@ class TouristSerializer(serializers.ModelSerializer):
 
 class TravelAgencySerializer(serializers.ModelSerializer):
     class Meta:
-        model = Tourist
-        fields = ['username','email','password','address','phone']
+        model = TravelAgency
+        fields = ['username', 'email', 'password', 'city','postalcode','country','age','gender']
 
 
+class ProgramsTableSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProgramsTable
+        fields = ['id','title','date','description','nbinscriptions','price','deadline','capacity','gallery','payment']
+
+class ProgramsLocationsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProgramsLocations
+        fields = ['program','id','name','duration','datedebut','datefin','category','details','longitude','latitude']

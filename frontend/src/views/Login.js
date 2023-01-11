@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../assets/css/login.css"
 import logo from "../assets/img/logo1.png"
 import { Button } from "reactstrap";
-import { Link } from "react-router-dom"
+import {Link} from "react-router-dom"
 export default function Login() {
 
     const [loginEmail, setLoginEmail] = useState("")
@@ -27,17 +27,15 @@ export default function Login() {
                         <input type="password" className="form-control" placeholder="Enter password" onChange={(e) => { setLoginPassword(e.target.value) }} />
                     </div>
                     <div className="auth-button">
-                        <Link to="/admin/dashboard">
-                            <Button
-                                className="btn-round"
-                                color="primary"
-                                type="submit"
-                            >
-                                Sign in
-                            </Button>
-                        </Link>
+                        <Button
+                            className="btn-round"
+                            color="primary"
+                            type="submit"
+                        >
+                            <Link to="/admin/dashboard">Sign in</Link>
+                        </Button>
                     </div>
-                    <div style={{ textAlign: "center" }}>you don't have an account ? <Link to="/tourist-registration">Sign up</Link></div>
+                    <div style={{textAlign: "center"}}>you don't have an account ? <Link to="/agency-registration">Sign up</Link></div>
                     <div className="message">{message}</div>
                 </form>
             </div>
