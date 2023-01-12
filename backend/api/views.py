@@ -15,3 +15,12 @@ class TraveAgencyView(viewsets.ModelViewSet):
     serializer_class = TravelAgencySerializer
     queryset = TravelAgency.objects.all()
 
+@api_view(['GET'])
+def current_user(request):
+    """
+    Determine the current user by their token, and return their data
+    """
+    serializer = TouristSerializer(request.user)
+    return Response(serializer.data)
+
+
