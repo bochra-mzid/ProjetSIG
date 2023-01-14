@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate
 from .serializers import *
 from .models import *
 
-class LoginView(views.APIView):
+class TouristLoginView(views.APIView):
     def post(self, request, format=None):
         email = request.data.get("email")
         password = request.data.get("password")
@@ -20,6 +20,22 @@ class LoginView(views.APIView):
             else:
                 return Response({"error": "Invalid Credentials"})
         except Tourist.DoesNotExist:
+            return Response({"error": "Invalid Credentials"})
+
+
+class AgencyLoginView(views.APIView):
+    def post(self, request, format=None):
+        email = request.data.get("email")
+        password = request.data.get("password")
+        print(email, password)
+        try:
+            user = TravelAgency.objects.get(email=email)
+            print(user.password)
+            if (password==user.password):
+                return Response({"message": "Logged In"})
+            else:
+                return Response({"error": "Invalid Credentials"})
+        except TravelAgency.DoesNotExist:
             return Response({"error": "Invalid Credentials"})
 
 

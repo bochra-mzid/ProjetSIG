@@ -36,19 +36,18 @@ class Tourist(models.Model):
         return self.username
 
 class TravelAgency(models.Model):
-    username = models.CharField(max_length=50)
-    email = models.EmailField(max_length=50,unique=True)
-    password = models.CharField(max_length=100)
+    name = models.CharField(max_length=50)
+    email = models.EmailField(max_length=50,unique=True, null=False)
+    password = models.CharField(max_length=100, null=False)
+    state = models.TextField(max_length=100)
     city = models.TextField(max_length=100)
     postalcode = models.IntegerField()
     country = models.TextField(max_length=100)
-    age = models.IntegerField()
-    GENDER_CHOICES = [
-        ('M', 'Male'),
-        ('F', 'Female'),
-    ]
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     image = models.ImageField(upload_to='uploads/images', null=True, blank=True)
+    facebook_url = models.TextField(max_length=100)
+    instagram_url = models.TextField(max_length=100)
+    description = models.TextField(max_length=350)
+    gallery = models.ImageField(upload_to='uploads/images', null=True, blank=True)
     def _str_(self):
         return self.username
 
