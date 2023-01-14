@@ -16,27 +16,25 @@ class TouristLoginView(views.APIView):
             user = Tourist.objects.get(email=email)
             print(user.password)
             if (password==user.password):
-                return Response({"message": "Logged In"})
+                return Response({"message": "Logged In"}, status=200)
             else:
-                return Response({"error": "Invalid Credentials"})
+                return Response({"error": "Invalid Credentials"}, status=404)
         except Tourist.DoesNotExist:
-            return Response({"error": "Invalid Credentials"})
+            return Response({"error": "Invalid Credentials"}, status=404)
 
 
 class AgencyLoginView(views.APIView):
     def post(self, request, format=None):
         email = request.data.get("email")
         password = request.data.get("password")
-        print(email, password)
         try:
             user = TravelAgency.objects.get(email=email)
-            print(user.password)
             if (password==user.password):
-                return Response({"message": "Logged In"})
+                return Response({"message": "Logged In"}, status=200)
             else:
-                return Response({"error": "Invalid Credentials"})
+                return Response({"error": "Invalid Credentials"}, status=404)
         except TravelAgency.DoesNotExist:
-            return Response({"error": "Invalid Credentials"})
+            return Response({"error": "Invalid Credentials"}, status=404)
 
 
 

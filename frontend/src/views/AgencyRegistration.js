@@ -11,6 +11,8 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import { styled } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+
 import axios from "axios";
 
 import profile from "../assets/img/user.png"
@@ -24,11 +26,25 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function TouristRegistration() {
+    let fileObj = [];
+    let fileArray = [];
     const [activeStep, setActiveStep] = React.useState(0);
     const [completed, setCompleted] = useState(false)
-    const steps = ['General information', 'profile photo'];
-    
+    const [photos, setPhotos] = useState(null);
 
+    const steps = ['', '', ''];
+
+    const uploadMultipleFiles = e => {
+        fileObj.push(e.target.files);
+        for (let i = 0; i < fileObj[0].length; i++) {
+            fileArray.push(URL.createObjectURL(fileObj[0][i]));
+        }
+        setPhotos(fileArray);
+    };
+
+    const uploadFiles = e => {
+        e.preventDefault();
+    };
     const totalSteps = () => {
         return steps.length;
     };
@@ -48,8 +64,7 @@ export default function TouristRegistration() {
     const handleNext = () => {
         const newActiveStep =
             isLastStep() && !allStepsCompleted()
-                ? // It's the last step, but not all steps have been completed,
-                // find the first step that has been completed
+                ?
                 steps.findIndex((step, i) => !(i in completed))
                 : activeStep + 1;
         setActiveStep(newActiveStep);
@@ -59,7 +74,7 @@ export default function TouristRegistration() {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleStep = (step: number) => () => {
+    const handleStep = (step) => () => {
         setActiveStep(step);
     };
 
@@ -83,7 +98,7 @@ export default function TouristRegistration() {
                     <div class="title">Regristration</div>
 
                 </div>
-                <Box sx={{ width: '100%', marginTop: '3%', height:"72%", display:"flex", justifyContent:"space-between", flexDirection:"column"}}>
+                <Box sx={{ width: '100%', marginTop: '3%', height: "72%", display: "flex", justifyContent: "space-between", flexDirection: "column" }}>
                     <Stepper nonLinear activeStep={activeStep}>
                         {steps.map((label, index) => (
                             <Step key={label} completed={completed[index]}>
@@ -114,23 +129,23 @@ export default function TouristRegistration() {
                                                 <input type="text" placeholder="Enter Your Name" required />
                                             </div>
                                             <div class="input-box">
-                                                <span class="deatils">Age</span>
-                                                <input type="text" placeholder="Enter your age" required />
-                                            </div>
-                                            <div class="input-box">
                                                 <span class="deatils">Email address</span>
                                                 <input type="text" placeholder="Enter Your email" required />
-                                            </div>
-                                            <div class="input-box">
-                                                <span class="deatils">City</span>
-                                                <input type="text" placeholder="Enter Your city" required />
                                             </div>
                                             <div class="input-box">
                                                 <span class="deatils">Country</span>
                                                 <input type="text" placeholder="Enter Your country" required />
                                             </div>
                                             <div class="input-box">
-                                                <span class="deatils">Postal Code</span>
+                                                <span class="deatils">State</span>
+                                                <input type="text" placeholder="Enter Your state" required />
+                                            </div>
+                                            <div class="input-box">
+                                                <span class="deatils">City</span>
+                                                <input type="text" placeholder="Enter your city" required />
+                                            </div>
+                                            <div class="input-box">
+                                                <span class="deatils">Postal code</span>
                                                 <input type="text" placeholder="Enter your postal code" required />
                                             </div>
                                             <div class="input-box">
@@ -142,48 +157,54 @@ export default function TouristRegistration() {
                                                 <input type="text" placeholder="Conform Password" required />
                                             </div>
                                         </div>
-                                        <div class="gendre-details">
-                                            <span class="deatils" style={{ marginRight: "5%", marginBottom: "5px" }}>Gendre</span>
-                                            <div class="catogary">
-                                                <label for="dot-1">
-                                                    <span class="dot one"></span>
-                                                    <span class="gendre">Male</span>
-                                                    
-                                                </label>
-                                                <label for="dot-2">
-                                                    <span class="dot one"></span>
-                                                    <span class="gendre">Female</span>
-                                                </label>
+                                    </form>
+                                </div>
+                                }
+                                {activeStep == 1 && <div style={{ marginBottom: "3%" }}>
+                                    <form action="#" className="register-form">
+                                        <div class="user-details">
+                                            <div class="input-box" style={{ width: "100%" }}>
+                                                <div class="input-box" style={{ width: "100%" }}>
+                                                    <span class="deatils">Description</span>
+                                                    <textarea type="text" rows="5" placeholder="Enter Your Name" required style={{ width: "100%" }} />
+                                                </div>
                                             </div>
+                                            <div class="user-details">
+
+                                            </div>
+                                            <div class="input-box">
+                                                <span class="deatils">Facebook url</span>
+                                                <input type="text" placeholder="Enter Your facebook url" />
+                                            </div>
+                                            <div class="input-box">
+                                                <span class="deatils">Instagram</span>
+                                                <input type="text" placeholder="Enter Your instagram url" />
+                                            </div>
+
                                         </div>
                                     </form>
                                 </div>
                                 }
-                                {activeStep == 1 && <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginTop: "5%", marginBottom: "3%" }}>
-                                    <label htmlFor="photo-upload" className="custom-file-upload fas">
-                                        <div className="img-wrap img-upload" >
-                                            <img for="photo-upload" src={profile} />
+                                {activeStep == 2 && <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginTop: "5%", marginBottom: "3%" }}>
+                                    <div style={{marginBottom:"3%"}}>Add photos to you gallery</div>
+                                    <form>
+                                        <div className="form-group">
+                                            <input
+                                                type="file"
+                                                className="form-control"
+                                                onChange={uploadMultipleFiles}
+                                                multiple
+                                            />
                                         </div>
-                                        <input id="photo-upload" type="file" />
-                                    </label>
-                                    <div>Please add a profile picture</div>
-
+                                        <div className="form-group multi-preview">
+                                            <div className="imgWrapper">
+                                                {(photos || []).map((url, i) => (
+                                                    <img key={i} src={url} alt="..." style={{maxWidth: "none"}}/>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>}
-                                {activeStep == 2 && <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginTop: "5%", marginBottom: "10%" }}>
-                                <div style={{marginBottom:"5%"}}>Please select ....</div>
-
-                                    <Grid container spacing={3} style={{width:"70%"}}>
-                                        {interest.map((element) => {
-                                            return (
-                                                <Grid xs="auto">
-                                                    <Item>{element}</Item>
-                                                </Grid>
-                                            )
-                                        })}
-                                    </Grid>
-
-                                </div>}
-
                                 <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, justifyContent: "flex-end", paddingTop: "0" }}>
                                     <Button
                                         color="inherit"
@@ -197,24 +218,11 @@ export default function TouristRegistration() {
                                         Next
                                     </Button>
                                 </Box>
-
-                                {/*activeStep !== steps.length &&
-                                        (completed[activeStep] ? (
-                                            <Typography variant="caption" sx={{ display: 'inline-block' }}>
-                                                Step {activeStep + 1} already completed
-                                            </Typography>
-                                        ) : (
-                                            <Button onClick={handleComplete}>
-                                                {completedSteps() === totalSteps() - 1
-                                                    ? 'Finish'
-                                                    : 'Complete Step'}
-                                            </Button>
-                                                ))*/}
                             </React.Fragment>
                         )}
                     </div>
                 </Box>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
