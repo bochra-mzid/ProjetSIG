@@ -8,11 +8,10 @@ class TouristSerializer(serializers.ModelSerializer):
         fields = ('id','username','email','password','nationality','phone','age','language','gender','image','interest')
 
 
-
 class TravelAgencySerializer(serializers.ModelSerializer):
     class Meta:
         model = TravelAgency
-        fields = ['username', 'email', 'password', 'city','postalcode','country','age','gender']
+        fields = ['name', 'email', 'password', 'phone', 'state', 'city','postalcode','country']
 
 
 class ProgramsTableSerializer(serializers.ModelSerializer):

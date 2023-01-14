@@ -39,6 +39,7 @@ class TravelAgency(models.Model):
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=50,unique=True, null=False)
     password = models.CharField(max_length=100, null=False)
+    phone = models.IntegerField()
     state = models.TextField(max_length=100)
     city = models.TextField(max_length=100)
     postalcode = models.IntegerField()

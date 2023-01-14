@@ -10,7 +10,7 @@ class TouristAdmin(admin.ModelAdmin):
     list_display = ('username','email','password','nationality','phone','age','language','gender')
 
 class TravelAgencyAdmin(admin.ModelAdmin):
-    list_display = ('name', 'email', 'password', 'state', 'city','postalcode','country')
+    list_display = ('name', 'email', 'password', 'phone', 'state', 'city','postalcode','country')
 
 class ProgramsTableAdmin(admin.ModelAdmin):
     list_display =('id','title','date','description','nbinscriptions','price','deadline','capacity','gallery','payment')

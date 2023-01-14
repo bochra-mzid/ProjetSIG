@@ -27,6 +27,7 @@ export default function Login() {
                 if (res.status == 200) {
                     setLoggedIn(true)
                     setMessage("")
+                    localStorage.setItem("id", res.data.id)
                     history.push('/admin/dashboard')
                 }
             })

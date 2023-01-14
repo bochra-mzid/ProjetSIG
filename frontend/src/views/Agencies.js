@@ -17,23 +17,32 @@ function Agencies() {
     const [states, setStates] = useState([])
     const [city, setCity] = useState("")
     const [selectedState, setSelectedState] = useState("")
-    const [allAgencies, setAllAgencies] = useState([
-        { "id": 1, "name": "agence x", "email": "agencex@gmail.com", "password": "123", "phone": 25444658, "fb_url": "", "insta_url": "", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra posuere elit quis ultrices. Donec ex erat, auctor ut urna nec, maximus tristique libero. Cras quis tortor arcu. Nam hendrerit aliquam turpis, ac placerat eros cursus ut. Aenean hendrerit, mauris ut molestie efficitur, dui tellus dapibus est, vitae volutpat odio neque et dui. Fusce aliquam mauris sit amet dictum pretium. Quisque ac tincidunt elit. Donec ut dignissim dui, vel consectetur lectus.", "city": "Tajerouine",  "address": "jsnfsdllflfw,d", "country": "Tunisia", "state": "Kef" },
+    const [allAgencies, setAllAgencies] = useState([])
 
-        { "id": 2, "name": "agence y", "email": "agencex@gmail.com", "password": "123", "phone": 25444658, "fb_url": "", "insta_url": "", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra posuere elit quis ultrices. Donec ex erat, auctor ut urna nec, maximus tristique libero. Cras quis tortor arcu. Nam hendrerit aliquam turpis, ac placerat eros cursus ut. Aenean hendrerit, mauris ut molestie efficitur, dui tellus dapibus est, vitae volutpat odio neque et dui. Fusce aliquam mauris sit amet dictum pretium. Quisque ac tincidunt elit. Donec ut dignissim dui, vel consectetur lectus.", "city": "Alma", "address": "jsnfsdllflfw,d", "country": "Canada", "state": "Quebec" },
-        { "id": 3, "name": "agence z", "email": "agencex@gmail.com", "password": "123", "phone": 25444658, "fb_url": "", "insta_url": "", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra posuere elit quis ultrices. Donec ex erat, auctor ut urna nec, maximus tristique libero. Cras quis tortor arcu. Nam hendrerit aliquam turpis, ac placerat eros cursus ut. Aenean hendrerit, mauris ut molestie efficitur, dui tellus dapibus est, vitae volutpat odio neque et dui. Fusce aliquam mauris sit amet dictum pretium. Quisque ac tincidunt elit. Donec ut dignissim dui, vel consectetur lectus.", "city": "Amos", "address": "jsnfsdllflfw,d", "country": "Canada", "state": "Quebec" }])
+    const [agencies, setAgencies] = useState(allAgencies)
 
-        const [agencies, setAgencies] = useState(allAgencies)
-
-        useEffect(()=>{
-            if (country==""){
-                setAgencies(allAgencies)
-            }
-        }, [country])
     useEffect(() => {
-        console.log("ok")
+        if (country == "") {
+            setAgencies(allAgencies)
+        }
+    }, [country])
+
+    useEffect(() => {
+        getAgencies()
         getData()
     }, [])
+
+    const getAgencies = async () => {
+        await axios({
+            method: 'get',
+            url: `http://localhost:8000/agencies`
+        })
+            .then(function (response) {
+                console.log(response)
+                setAllAgencies(response.data)
+                setAgencies(response.data)
+            });
+    }
     const handleCountryChange = (e, newValue) => {
         console.log(newValue)
         setCountry(newValue)
@@ -43,7 +52,7 @@ function Agencies() {
         console.log(states)
         setStates(states)
         let agen = allAgencies.filter(agency => agency.country === newValue)
-        console.log("agencies",agen)
+        console.log("agencies", agen)
         setAgencies(agen)
     }
 
@@ -55,13 +64,13 @@ function Agencies() {
         cities.sort()
         setCities(cities)
         let agen = allAgencies.filter(agency => (agency.country === country && agency.state === newValue))
-        console.log("agencies",agen)
+        console.log("agencies", agen)
         setAgencies(agen)
     }
     const handleCityChange = (e, newValue) => {
 
         let agen = allAgencies.filter(agency => (agency.country === country && agency.state === selectedState && agency.city === newValue))
-        console.log("agencies",agen)
+        console.log("agencies", agen)
         setAgencies(agen)
         setCity(newValue)
         console.log(city)
@@ -142,13 +151,13 @@ function Agencies() {
                                         </div>
                                     </div>
                                     <Button>
-                        
-                        More details
-                      </Button>
+
+                                        More details
+                                    </Button>
                                 </div>
-                                
+
                             </CardBody>
-                            
+
                         </Card>
                     )
                 })}

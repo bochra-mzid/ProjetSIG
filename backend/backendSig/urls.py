@@ -13,8 +13,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('tourist/login/', views.TouristLoginView.as_view()),
     path('agency/login/', views.AgencyLoginView.as_view()),
+    path('agencies/', views.TravelAgencyApiView.as_view()),
+    path('agency/<int:agency_id>/', views.TravelAgencyApiView.as_view()),
     path('api/', include(router.urls)),
-    path('', include(router.urls)),
-
-   
+    path('', include(router.urls)),  
 ]
