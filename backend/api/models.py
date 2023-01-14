@@ -6,11 +6,11 @@ from datetime import datetime
 #TouristRegistration
 class Tourist(models.Model):
     username = models.CharField(max_length=50)
-    email = models.EmailField(max_length=50,unique=True)
-    password = models.CharField(max_length=100)
+    email = models.EmailField(max_length=50,unique=True, null=False)
+    password = models.CharField(max_length=100, null=False)
     nationality = models.TextField(max_length=100)
     phone = models.IntegerField()
-    statut = models.TextField(max_length=100)
+    #statut = models.TextField(max_length=100)
     age = models.IntegerField()
     language = models.CharField(max_length=100)
     GENDER_CHOICES = [

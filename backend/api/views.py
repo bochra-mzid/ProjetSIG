@@ -1,5 +1,3 @@
-import jwt
-from rest_framework_jwt.settings import api_settings
 from rest_framework import views
 from django.contrib.auth.hashers import check_password
 from rest_framework.permissions import IsAuthenticated
@@ -9,16 +7,15 @@ from django.contrib.auth import authenticate
 from .serializers import *
 from .models import *
 
-jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
-jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
-
 class LoginView(views.APIView):
     def post(self, request, format=None):
         email = request.data.get("email")
         password = request.data.get("password")
+        print(email, password)
         try:
             user = Tourist.objects.get(email=email)
-            if check_password(password, user.password):
+            print(user.password)
+            if (password==user.password):
                 return Response({"message": "Logged In"})
             else:
                 return Response({"error": "Invalid Credentials"})

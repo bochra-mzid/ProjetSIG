@@ -4,10 +4,10 @@ from rest_framework import routers
 from api import views
 
 router = routers.DefaultRouter()
-router.register(r'tourists', views.TouristView, 'tourist')
-router.register(r'travelagencies', views.TraveAgencyView, 'travelagency')
-router.register(r'programstable', views.ProgramsTableView, 'program')
-router.register(r'programslocation', views.ProgramsLocationsView, 'programloc')
+#router.register(r'tourists', views.TouristView, 'tourist')
+#router.register(r'travelagencies', views.TraveAgencyView, 'travelagency')
+#router.register(r'programstable', views.ProgramsTableView, 'program')
+#router.register(r'programslocation', views.ProgramsLocationsView, 'programloc')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
