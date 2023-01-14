@@ -11,6 +11,7 @@ router.register(r'programslocation', views.ProgramsLocationsView, 'programloc')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('login/', views.LoginView.as_view()),
     path('api/', include(router.urls)),
     path('', include(router.urls)),
 

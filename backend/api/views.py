@@ -1,24 +1,40 @@
-from django.shortcuts import render
+import jwt
+from rest_framework_jwt.settings import api_settings
+from rest_framework import views
+from django.contrib.auth.hashers import check_password
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.response import Response
+from django.contrib.auth import authenticate
 from .serializers import *
-from django.http import HttpResponse,JsonResponse
-from rest_framework .parsers import JSONParser
-from rest_framework import viewsets
-from .models import Tourist,TravelAgency,ProgramsTable,ProgramsLocations
-import os
+from .models import *
 
-# Create your views here.
-class TouristView(viewsets.ModelViewSet):
-    serializer_class = TouristSerializer
-    queryset = Tourist.objects.all()
+jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
 
-class TraveAgencyView(viewsets.ModelViewSet):
-    serializer_class = TravelAgencySerializer
-    queryset = TravelAgency.objects.all()
+class LoginView(views.APIView):
+    def post(self, request, format=None):
+        email = request.data.get("email")
+        password = request.data.get("password")
+        try:
+            user = Tourist.objects.get(email=email)
+            if check_password(password, user.password):
+                return Response({"message": "Logged In"})
+            else:
+                return Response({"error": "Invalid Credentials"})
+        except Tourist.DoesNotExist:
+            return Response({"error": "Invalid Credentials"})
 
-class ProgramsTableView(viewsets.ModelViewSet):
-    serializer_class = ProgramsTableSerializer
-    queryset = ProgramsTable.objects.all()
 
-class ProgramsLocationsView(viewsets.ModelViewSet):
-    serializer_class = ProgramsLocationsSerializer
-    queryset = ProgramsLocations.objects.all()
+
+#class TraveAgencyView(viewsets.ModelViewSet):
+    #serializer_class = TravelAgencySerializer
+    #queryset = TravelAgency.objects.all()
+
+#class ProgramsTableView(viewsets.ModelViewSet):
+    #serializer_class = ProgramsTableSerializer
+    #queryset = ProgramsTable.objects.all()
+
+#class ProgramsLocationsView(viewsets.ModelViewSet):
+  #  serializer_class = ProgramsLocationsSerializer
+   # queryset = ProgramsLocations.objects.all()
