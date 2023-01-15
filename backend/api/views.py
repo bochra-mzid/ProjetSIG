@@ -119,6 +119,16 @@ class TouristUpdateView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ProgramsListApiView(APIView):
+    def get(self, request, *args, **kwargs):
+        id = self.kwargs['id']
+        programs = ProgramsTable.objects.filter(agency=id)
+        print(programs)
+        serializer = ProgramsTableSerializer(programs, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
 #class TraveAgencyView(viewsets.ModelViewSet):
     #serializer_class = TravelAgencySerializer
     #queryset = TravelAgency.objects.all()

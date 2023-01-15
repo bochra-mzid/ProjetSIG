@@ -17,8 +17,10 @@ class TravelAgencyAdmin(admin.ModelAdmin):
     list_display = ('name', 'email', 'password', 'phone', 'state', 'city','postalcode','country')
 
 class ProgramsTableAdmin(admin.ModelAdmin):
-    list_display =('id','title','date','description','nbinscriptions','price','deadline','capacity','gallery','payment')
-    
+    list_display =('id','title','date','description','nbinscriptions','price','deadline','capacity','gallery')
+    """def inscriptions_list(self, obj):
+        return ", ".join([str(inscription.username) for inscription in obj.inscriptions.all()])"""
+
 class ProgramsLocationsAdmin(admin.ModelAdmin):
     list_display = ('program','id','name','duration','datedebut','datefin','category','details','longitude','latitude')
     list_filter = ('program', 'category')
