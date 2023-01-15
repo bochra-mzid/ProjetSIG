@@ -5,19 +5,19 @@ from datetime import datetime
 
 #TouristRegistration
 class Tourist(models.Model):
-    username = models.CharField(max_length=50)
-    email = models.EmailField(max_length=50,unique=True, null=False)
-    password = models.CharField(max_length=100, null=False)
-    nationality = models.TextField(max_length=100)
-    phone = models.IntegerField()
+    username = models.CharField(max_length=50,null=False, blank=False)
+    email = models.EmailField(max_length=50,unique=True, null=False, blank=False)
+    password = models.CharField(max_length=100,null=False, blank=False)
+    nationality = models.TextField(max_length=100,null=True, blank=True)
+    phone = models.IntegerField(null=True, blank=True)
     #statut = models.TextField(max_length=100)
-    age = models.IntegerField()
-    language = models.CharField(max_length=100)
+    age = models.IntegerField(null=True, blank=True)
+    language = models.CharField(max_length=100,null=True, blank=True)
     GENDER_CHOICES = [
         ('M', 'Male'),
         ('F', 'Female'),
     ]
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES,null=True, blank=True)
     image = models.ImageField(upload_to='uploads/images', null=True, blank=True)
     INTEREST_CHOICES = [
         ('Sports','Sports'),
@@ -31,23 +31,23 @@ class Tourist(models.Model):
         ('Swimming','Swimming'),
         ('Shopping','Shopping'),
     ]
-    interest = models.CharField(max_length=100, choices=INTEREST_CHOICES)
+    interest = models.CharField(max_length=100, choices=INTEREST_CHOICES,null=True, blank=True)
     def _str_(self):
         return self.username
 
 class TravelAgency(models.Model):
-    name = models.CharField(max_length=50)
-    email = models.EmailField(max_length=50,unique=True, null=False)
-    password = models.CharField(max_length=100, null=False)
-    phone = models.IntegerField()
-    state = models.TextField(max_length=100)
-    city = models.TextField(max_length=100)
-    postalcode = models.IntegerField()
-    country = models.TextField(max_length=100)
+    name = models.CharField(max_length=50, null=False, blank=False)
+    email = models.EmailField(max_length=50,unique=True, null=False, blank=False)
+    password = models.CharField(max_length=100, null=False, blank=False)
+    phone = models.IntegerField(null=True, blank=True)
+    state = models.TextField(max_length=100,null=True, blank=True)
+    city = models.TextField(max_length=100,null=True, blank=True)
+    postalcode = models.IntegerField(null=True, blank=True)
+    country = models.TextField(max_length=100,null=True, blank=True)
     image = models.ImageField(upload_to='uploads/images', null=True, blank=True)
-    facebook_url = models.TextField(max_length=100)
-    instagram_url = models.TextField(max_length=100)
-    description = models.TextField(max_length=350)
+    facebook_url = models.TextField(max_length=100,null=True, blank=True)
+    instagram_url = models.TextField(max_length=100,null=True, blank=True)
+    description = models.TextField(max_length=350,null=True, blank=True)
     gallery = models.ImageField(upload_to='uploads/images', null=True, blank=True)
     def _str_(self):
         return self.username
