@@ -23,7 +23,7 @@ class Tourist(models.Model):
     ]
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES,null=True, blank=True)
     image = models.ImageField(upload_to='uploads/images', null=True, blank=True)
-    INTEREST_CHOICES = [
+    """INTEREST_CHOICES = [
         ('Sports','Sports'),
         ('hiking','hiking'),
         ('cycling','cycling'),
@@ -34,12 +34,14 @@ class Tourist(models.Model):
         ('Surfing','Surfing'),
         ('Swimming','Swimming'),
         ('Shopping','Shopping'),
-    ]
-    interest = models.CharField(max_length=100, choices=INTEREST_CHOICES,null=True, blank=True)
+    ]"""
+    interest = models.ManyToManyField(Interest)
+
     def _str_(self):
         return self.username
 
 class TravelAgency(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, null=False, blank=False)
     email = models.EmailField(max_length=50,unique=True, null=False, blank=False)
     password = models.CharField(max_length=100, null=False, blank=False)
@@ -61,16 +63,18 @@ class ProgramsTable(models.Model):
     title = models.TextField(max_length=100)
     date = models.DateField()
     description = models.TextField(max_length=200)
-    nbinscriptions = models.IntegerField()
+    nbinscriptions = models.IntegerField(null=True, default=0)    
     price = models.FloatField()
     deadline = models.DateField()
     capacity = models.IntegerField()
     gallery = models.ImageField(upload_to='uploads/images', null=True, blank=True)
-    PAYMENT_OPTIONS = [
+    """PAYMENT_OPTIONS = [
         ('P', 'paid'),
         ('NP', 'not paid'),
     ]
-    payment = models.CharField(max_length=2, choices=PAYMENT_OPTIONS)
+    payment = models.CharField(max_length=2, choices=PAYMENT_OPTIONS)"""
+    #inscriptions = models.ManyToManyField(Tourist)
+    agency = models.ForeignKey(TravelAgency, on_delete=models.CASCADE)
     def __str__(self):
         return self.title
     

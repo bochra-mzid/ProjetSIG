@@ -11,7 +11,7 @@ class TouristSerializer(serializers.ModelSerializer):
     interest = InterestSerializer(read_only=True, many=True)
     class Meta:
         model = Tourist
-        fields = ('id','username','email','password','nationality','phone','age','language','gender','image','interest')
+        fields = ('id','username','email','password','nationality','phone','age','language','gender','image', 'interest')
 
 
 class TravelAgencySerializer(serializers.ModelSerializer):
@@ -23,7 +23,7 @@ class TravelAgencySerializer(serializers.ModelSerializer):
 class ProgramsTableSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProgramsTable
-        fields = ['id','title','date','description','nbinscriptions','price','deadline','capacity','gallery','payment']
+        fields = ['id','title','date','description','nbinscriptions','price','deadline','capacity','gallery', 'agency']
 
 class ProgramsLocationsSerializer(serializers.ModelSerializer):
     class Meta:

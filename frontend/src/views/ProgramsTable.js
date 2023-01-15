@@ -1,21 +1,3 @@
-/*!
-
-=========================================================
-* Paper Dashboard React - v1.3.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-* Licensed under MIT (https://github.com/creativetimofficial/paper-dashboard-react/blob/main/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React, { useState, useEffect, useSyncExternalStore } from "react";
 import 'react-bootstrap-table2-filter/dist/react-bootstrap-table2-filter.min.css';
 import filterFactory, { textFilter, selectFilter } from 'react-bootstrap-table2-filter';
@@ -47,7 +29,7 @@ import Map, { Marker, Popup, GeolocateControl, NavigationControl, } from 'react-
 import 'mapbox-gl/dist/mapbox-gl.css';
 import mapboxgl from 'mapbox-gl';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-// reactstrap components
+import axios from "axios"
 import {
   Card,
   CardHeader,
@@ -72,7 +54,8 @@ const Transition = React.forwardRef(function Transition(
 
 
 function ProgramsTable() {
-  const [programs, setPrograms] = useState([{ 'id': 1, 'title': "prog1", 'description': "Lorem ipsum dolor sit amet. Eum quod placeat sed sequi aliquam qui nihil neque. Aut aperiam ullam aut facere velit est soluta excepturi. Sit aperiam dolores ut consequatur voluptate a corrupti adipisci. Aut fugiat aspernatur est libero alias et facere eaque aut beatae accusantium At impedit rerum et voluptatem deleniti.Voluptas pariatur ut mollitia culpa sed facere provident ut sunt voluptas. A neque veniam sed magni quam est quidem illo eum quisquam accusantium ut omnis reiciendis. Et autem possimus vel corrupti animi et repellendus sint.", 'date': "20/02/2023", "nb_inscriptions": 50, "price": "900", "deadline": "30/01/2023", "capacity": 60, "locations": [{ "id": 1, name: "houmet souk", duration: "1h", date_debut: "8h", date_fin: "12h", category: "visite", details: "loremipsum", longitude: 10.1815, latitude: 36.8065 }, { "id": 2, name: "houmet souk", duration: "1h", date_debut: "8h", date_fin: "12h", category: "visite", details: "loremipsum", latitude: 33.8212, longitude: 10.8543 }] }])
+  //const [programs, setPrograms] = useState([{ 'id': 1, 'title': "prog1", 'description': "Lorem ipsum dolor sit amet. Eum quod placeat sed sequi aliquam qui nihil neque. Aut aperiam ullam aut facere velit est soluta excepturi. Sit aperiam dolores ut consequatur voluptate a corrupti adipisci. Aut fugiat aspernatur est libero alias et facere eaque aut beatae accusantium At impedit rerum et voluptatem deleniti.Voluptas pariatur ut mollitia culpa sed facere provident ut sunt voluptas. A neque veniam sed magni quam est quidem illo eum quisquam accusantium ut omnis reiciendis. Et autem possimus vel corrupti animi et repellendus sint.", 'date': "20/02/2023", "nb_inscriptions": 50, "price": "900", "deadline": "30/01/2023", "capacity": 60, "locations": [{ "id": 1, name: "houmet souk", duration: "1h", date_debut: "8h", date_fin: "12h", category: "visite", details: "loremipsum", longitude: 10.1815, latitude: 36.8065 }, { "id": 2, name: "houmet souk", duration: "1h", date_debut: "8h", date_fin: "12h", category: "visite", details: "loremipsum", latitude: 33.8212, longitude: 10.8543 }] }])
+  const [programs, setPrograms] = useState([])
   const [tourists, setTourists] = useState([{ "name": "wajdi jbali", "phone": 23222564, "statut": "paid" }, { "name": "mouna jlassi", "phone": 55211778, "statut": "not paid" }])
   const [open, setOpen] = React.useState(false);
   const [openNew, setOpenNew] = useState(false)
@@ -129,7 +112,19 @@ function ProgramsTable() {
     setCurrentPlaceId(id);
     console.log(id)
   };
-
+  const getPrograms = async () => {
+    await axios({
+        method: 'get',
+        url: `http://localhost:8000/programs/${localStorage.getItem('id')}`
+    })
+        .then(function (response) {
+            console.log(response)
+            setPrograms(response.data)
+        });
+}
+useEffect(()=>{
+  getPrograms()
+}, [])
   return (
     <>
       <div className="content">
@@ -154,7 +149,7 @@ function ProgramsTable() {
                         <tr key={prog.id}>
                           <td>{prog.title}</td>
                           <td>{prog.date}</td>
-                          <td>{prog.nb_inscriptions}</td>
+                          <td>{prog.nbinscriptions}</td>
                           <td>
                             <Button
                               color="primary"
@@ -207,9 +202,9 @@ function ProgramsTable() {
                                 <div>
 
                                   <GroupsIcon />
-                                  Total inscriptions: {prog.nb_inscriptions}
+                                  Total inscriptions: {prog.nbinscriptions}
                                 </div>
-                                
+                                {/*
                                 <div style={{ height: '100vh', width: '100%' }}>
                                   <Map
                                     initialViewState={{
@@ -263,7 +258,7 @@ function ProgramsTable() {
                         position="top-left"
                         trackUserLocation/>
                                   </Map>
-                                </div>
+                                  </div>*/}
                                 <h2 className="inscriptions-details">Inscriptions list</h2>
                                 <BootstrapTable keyField='name' data={tourists} columns={columns} pagination={paginationFactory()} filter={filterFactory()} />
                               </div>

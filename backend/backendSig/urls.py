@@ -20,6 +20,7 @@ urlpatterns = [
     path('agency/signup/', views.TravelagencySignUpView.as_view()),
     path('agencies/', views.TravelagencyListApiView.as_view()),
     path('agency/<int:id>/', views.TravelagencyRetrieveApiView.as_view()),
+    path('programs/<int:id>/', views.ProgramsListApiView.as_view()),
     path('api/', include(router.urls)),
     path('', include(router.urls)),  
 ]
