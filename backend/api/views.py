@@ -69,6 +69,16 @@ class TouristSignupView(views.APIView):
         image = request.data.get("image", "")
         tourist = Tourist.objects.create(username=username, email=email, password=password, nationality=nationality, phone=phone, age=age, language=language, gender=gender, interest=interest, image=image)
         return Response({"message": "Tourist created"})
+    
+#SignUp a travelagency
+class TravelagencySignUpView(views.APIView):
+
+    def post(self, request, format=None):
+        serializer = TravelAgencySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"message": "Travel agency created successfully"})
+        return Response({"error": serializer.errors})
 
 
 #class TraveAgencyView(viewsets.ModelViewSet):
