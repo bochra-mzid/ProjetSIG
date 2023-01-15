@@ -4,6 +4,10 @@ from datetime import datetime
 # Create your models here.
 
 #TouristRegistration
+class Interest(models.Model):
+    name = models.CharField(max_length=50)
+    def _str_(self):
+        return self.name
 class Tourist(models.Model):
     username = models.CharField(max_length=50)
     email = models.EmailField(max_length=50,unique=True, null=False)
@@ -31,7 +35,7 @@ class Tourist(models.Model):
         ('Swimming','Swimming'),
         ('Shopping','Shopping'),
     ]
-    interest = models.CharField(max_length=100, choices=INTEREST_CHOICES)
+    interest = models.ManyToManyField(Interest)
     def _str_(self):
         return self.username
 

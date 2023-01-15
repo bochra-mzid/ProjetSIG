@@ -10,29 +10,36 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework import permissions
 from .models import TravelAgency
-from .serializers import TravelAgencySerializer
 
 class TravelAgencyApiView(APIView):
+    def get_object(self, id):
+        try:
+            return TravelAgency.objects.get(id=id)
+        except TravelAgency.DoesNotExist:
+            return None
+
+    def get(self, request, id, format=None):
+        agency = self.get_object(id)
+        serializer = TravelAgencySerializer(agency)
+        return Response(serializer.data)
+
+class TravelAgenciesListView(APIView):    
     def get(self, request, *args, **kwargs):
         agencies = TravelAgency.objects.all()
         serializer = TravelAgencySerializer(agencies, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    def get_object(self, agency_id):
-        try:
-            return TravelAgency.objects.get(id=agency_id)
-        except TravelAgency.DoesNotExist:
-            return None
 
 class TouristApiView(APIView):
-    def get(self, request, *args, **kwargs):
-        agencies = Tourist.objects.all()
-        serializer = TouristSerializer(agencies, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    def get_object(self, tourist_id):
-        try:
-            return Tourist.objects.get(id=tourist_id)
+    def get_object(self, id):
+        try: 
+            return Tourist.objects.get(id=id)
         except Tourist.DoesNotExist:
             return None
+
+    def get(self, request, id, format=None):
+        tourist = self.get_object(id)
+        serializer = TouristSerializer(tourist)
+        return Response(serializer.data)
 
 class TouristLoginView(views.APIView):
     def post(self, request, format=None):
@@ -63,6 +70,12 @@ class AgencyLoginView(views.APIView):
         except TravelAgency.DoesNotExist:
             return Response({"error": "Invalid Credentials"}, status=404)
 
+class InterestApiView(APIView):
+    def get(self, request, *args, **kwargs):
+        interests = Interest.objects.all()
+        serializer = InterestSerializer(interests, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
 
 
 #class TraveAgencyView(viewsets.ModelViewSet):

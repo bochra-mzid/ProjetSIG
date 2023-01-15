@@ -23,21 +23,23 @@ function User() {
   const [languages, setLanguages] = useState(["Arabic", "Chinese", "French", "English", "German", "Japanese", "Spanish", "Persian", "Russian", "Malay", "Portuguese", "Italian", "Turkish", "Lahnda", "Tamil", "Urdu", "Korean", "Hindi", "Bengali", "Vietnamese", "Telugu", "Marathi"])
   const [nationality, setNationality] = useState(["Afghan", "Albanian", "Algerian", "American", "Andorran", "Angolan", "Antiguans", "Argentinean", "Armenian", "Australian", "Austrian", "Azerbaijani", "Bahamian", "Bahraini", "Bangladeshi", "Barbadian", "Barbudans", "Batswana", "Belarusian", "Belgian", "Belizean", "Beninese", "Bhutanese", "Bolivian", "Bosnian", "Brazilian", "British", "Bruneian", "Bulgarian", "Burkinabe", "Burmese", "Burundian", "Cambodian", "Cameroonian", "Canadian", "Cape Verdean", "Central African", "Chadian", "Chilean", "Chinese", "Colombian", "Comoran", "Congolese", "Costa Rican", "Croatian", "Cuban", "Cypriot", "Czech", "Danish", "Djibouti", "Dominican", "Dutch", "East Timorese", "Ecuadorean", "Egyptian", "Emirian", "Equatorial Guinean", "Eritrean", "Estonian", "Ethiopian", "Fijian", "Filipino", "Finnish", "French", "Gabonese", "Gambian", "Georgian", "German", "Ghanaian", "Greek", "Grenadian", "Guatemalan", "Guinea-Bissauan", "Guinean", "Guyanese", "Haitian", "Herzegovinian", "Honduran", "Hungarian", "I-Kiribati", "Icelander", "Indian", "Indonesian", "Iranian", "Iraqi", "Irish", "Italian", "Ivorian", "Jamaican", "Japanese", "Jordanian", "Kazakhstani", "Kenyan", "Kittian and Nevisian", "Kuwaiti", "Kyrgyz", "Laotian", "Latvian", "Lebanese", "Liberian", "Libyan", "Liechtensteiner", "Lithuanian", "Luxembourger", "Macedonian", "Malagasy", "Malawian", "Malaysian", "Maldivian", "Malian", "Maltese", "Marshallese", "Mauritanian", "Mauritian", "Mexican", "Micronesian", "Moldovan", "Monacan", "Mongolian", "Moroccan", "Mosotho", "Motswana", "Mozambican", "Namibian", "Nauruan", "Nepalese", "New Zealander", "Ni-Vanuatu", "Nicaraguan", "Nigerian", "Nigerien", "North Korean", "Northern Irish", "Norwegian", "Omani", "Pakistani", "Palauan", "Panamanian", "Papua New Guinean", "Paraguayan", "Peruvian", "Polish", "Portuguese", "Qatari", "Romanian", "Russian", "Rwandan", "Saint Lucian", "Salvadoran", "Samoan", "San Marinese", "Sao Tomean", "Saudi", "Scottish", "Senegalese", "Serbian", "Seychellois", "Sierra Leonean", "Singaporean", "Slovakian", "Slovenian", "Solomon Islander", "Somali", "South African", "South Korean", "Spanish", "Sri Lankan", "Sudanese", "Surinamer", "Swazi", "Swedish", "Swiss", "Syrian", "Taiwanese", "Tajik", "Tanzanian", "Thai", "Togolese", "Tongan", "Trinidadian or Tobagonian", "Tunisian", "Turkish", "Tuvaluan", "Ugandan", "Ukrainian", "Uruguayan", "Uzbekistani", "Venezuelan", "Vietnamese", "Welsh", "Yemenite", "Zambian", "Zimbabwean",])
   const [tourist, setTourist] = useState({})
-  const [gender, setGender ] = useState("")
-  const [nat, setNat]= useState("")
+  const [gender, setGender] = useState("")
+  const [nat, setNat] = useState("")
   const [language, setLanguage] = useState("")
+  const [interest, setInterest] = useState([])
   useEffect(() => {
+    console.log(localStorage.getItem("id"))
     axios({
       method: 'get',
       url: `http://localhost:8000/tourist/${localStorage.getItem("id")}`
     })
       .then(function (response) {
         console.log(response)
-        setTourist(response.data[0])
-        setGender(response.data[0].gender)
-        setNat(response.data[0].nationality)
-        setLanguage(response.data[0].language)
-        
+        setTourist(response.data)
+        setGender(response.data.gender)
+        setNat(response.data.nationality)
+        setLanguage(response.data.language)
+        setInterest(response.data.interest)
       });
   }, [])
   return (
@@ -97,7 +99,7 @@ function User() {
                           <Select
                             value={gender}
                             size="small"
-                            onChange={(e)=>setGender(e.target.value())}
+                            onChange={(e) => setGender(e.target.value())}
                           >
                             <MenuItem value={"M"}>M</MenuItem>
                             <MenuItem value={"F"}>F</MenuItem>
@@ -133,7 +135,7 @@ function User() {
                           <Select
                             value={nat}
                             size="small"
-                            onChange={(e)=>setNat(e.target.value)}
+                            onChange={(e) => setNat(e.target.value)}
                           >
                             {nationality.map((nat) => {
                               return (
@@ -151,7 +153,7 @@ function User() {
                           <Select
                             value={language}
                             size="small"
-                            onChange={(e)=> setLanguage(e.target.value)}
+                            onChange={(e) => setLanguage(e.target.value)}
                           >
                             {languages.map((lang) => {
                               return (
@@ -163,18 +165,18 @@ function User() {
                       </FormGroup>
                     </Col>
                   </Row>
-                  {/*<Row>
+                  <Row>
                     <Col md="12">
                       <FormGroup>
 
                         <label>Area of interest</label>
                         <div>
 
-                          {tourist.area_of_interest.map((element) => {
+                          {interest.map((element) => {
 
                             return (
                               <Chip
-                                label={element}
+                                label={element.name}
                                 style={{ marginRight: "2%" }}
                               />
                             );
@@ -182,7 +184,7 @@ function User() {
                         </div>
                       </FormGroup>
                     </Col>
-                        </Row>*/}
+                  </Row>
                   <Row>
                     <div className="update ml-auto mr-auto">
                       <Button

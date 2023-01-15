@@ -25,6 +25,7 @@ export default function Login() {
         })
             .then((res) => {
                 if (res.status == 200) {
+                    localStorage.setItem("id", res.data.id)
                     setLoggedIn(true)
                     setMessage("")
                     history.push('/tourist/dashboard-tourist')
