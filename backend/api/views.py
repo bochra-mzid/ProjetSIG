@@ -1,4 +1,5 @@
 from rest_framework import views
+from rest_framework.generics import ListAPIView, RetrieveAPIView
 from django.contrib.auth.hashers import check_password
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import TokenAuthentication
@@ -12,16 +13,6 @@ from rest_framework import permissions
 from .models import TravelAgency
 from .serializers import TravelAgencySerializer
 
-class TravelAgencyApiView(APIView):
-    def get(self, request, *args, **kwargs):
-        agencies = TravelAgency.objects.all()
-        serializer = TravelAgencySerializer(agencies, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    def get_object(self, agency_id):
-        try:
-            return TravelAgency.objects.get(id=agency_id)
-        except TravelAgency.DoesNotExist:
-            return None
 
 class TouristLoginView(views.APIView):
     def post(self, request, format=None):
@@ -79,7 +70,40 @@ class TravelagencySignUpView(views.APIView):
             serializer.save()
             return Response({"message": "Travel agency created successfully"})
         return Response({"error": serializer.errors})
+    
+#get all tourists and a tourist by ID
+class TouristListApiView(ListAPIView):
+    queryset = Tourist.objects.all()
+    serializer_class = TouristSerializer
 
+class TouristRetrieveApiView(RetrieveAPIView):
+    queryset = Tourist.objects.all()
+    serializer_class = TouristSerializer
+    lookup_field = 'id'
+    
+    def get_object(self):
+        tourist_id = self.kwargs['id']
+        try:
+            return Tourist.objects.get(id=tourist_id)
+        except Tourist.DoesNotExist:
+            return None
+    
+#get all agenciess and an agency by ID
+class TravelagencyListApiView(ListAPIView):
+    queryset = TravelAgency.objects.all()
+    serializer_class = TravelAgencySerializer
+
+class TravelagencyRetrieveApiView(RetrieveAPIView):
+    queryset = TravelAgency.objects.all()
+    serializer_class = TravelAgencySerializer
+    lookup_field = 'id'
+    
+    def get_object(self):
+        agency_id = self.kwargs['id']
+        try:
+            return TravelAgency.objects.get(id=agency_id)
+        except TravelAgency.DoesNotExist:
+            return None
 
 #class TraveAgencyView(viewsets.ModelViewSet):
     #serializer_class = TravelAgencySerializer
