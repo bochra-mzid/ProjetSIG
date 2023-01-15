@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Chip from '@mui/material/Chip';
+import axios from 'axios'
 
 import {
   Button,
@@ -18,10 +19,29 @@ import {
 } from "reactstrap";
 
 function User() {
+
   const [languages, setLanguages] = useState(["Arabic", "Chinese", "French", "English", "German", "Japanese", "Spanish", "Persian", "Russian", "Malay", "Portuguese", "Italian", "Turkish", "Lahnda", "Tamil", "Urdu", "Korean", "Hindi", "Bengali", "Vietnamese", "Telugu", "Marathi"])
   const [nationality, setNationality] = useState(["Afghan", "Albanian", "Algerian", "American", "Andorran", "Angolan", "Antiguans", "Argentinean", "Armenian", "Australian", "Austrian", "Azerbaijani", "Bahamian", "Bahraini", "Bangladeshi", "Barbadian", "Barbudans", "Batswana", "Belarusian", "Belgian", "Belizean", "Beninese", "Bhutanese", "Bolivian", "Bosnian", "Brazilian", "British", "Bruneian", "Bulgarian", "Burkinabe", "Burmese", "Burundian", "Cambodian", "Cameroonian", "Canadian", "Cape Verdean", "Central African", "Chadian", "Chilean", "Chinese", "Colombian", "Comoran", "Congolese", "Costa Rican", "Croatian", "Cuban", "Cypriot", "Czech", "Danish", "Djibouti", "Dominican", "Dutch", "East Timorese", "Ecuadorean", "Egyptian", "Emirian", "Equatorial Guinean", "Eritrean", "Estonian", "Ethiopian", "Fijian", "Filipino", "Finnish", "French", "Gabonese", "Gambian", "Georgian", "German", "Ghanaian", "Greek", "Grenadian", "Guatemalan", "Guinea-Bissauan", "Guinean", "Guyanese", "Haitian", "Herzegovinian", "Honduran", "Hungarian", "I-Kiribati", "Icelander", "Indian", "Indonesian", "Iranian", "Iraqi", "Irish", "Italian", "Ivorian", "Jamaican", "Japanese", "Jordanian", "Kazakhstani", "Kenyan", "Kittian and Nevisian", "Kuwaiti", "Kyrgyz", "Laotian", "Latvian", "Lebanese", "Liberian", "Libyan", "Liechtensteiner", "Lithuanian", "Luxembourger", "Macedonian", "Malagasy", "Malawian", "Malaysian", "Maldivian", "Malian", "Maltese", "Marshallese", "Mauritanian", "Mauritian", "Mexican", "Micronesian", "Moldovan", "Monacan", "Mongolian", "Moroccan", "Mosotho", "Motswana", "Mozambican", "Namibian", "Nauruan", "Nepalese", "New Zealander", "Ni-Vanuatu", "Nicaraguan", "Nigerian", "Nigerien", "North Korean", "Northern Irish", "Norwegian", "Omani", "Pakistani", "Palauan", "Panamanian", "Papua New Guinean", "Paraguayan", "Peruvian", "Polish", "Portuguese", "Qatari", "Romanian", "Russian", "Rwandan", "Saint Lucian", "Salvadoran", "Samoan", "San Marinese", "Sao Tomean", "Saudi", "Scottish", "Senegalese", "Serbian", "Seychellois", "Sierra Leonean", "Singaporean", "Slovakian", "Slovenian", "Solomon Islander", "Somali", "South African", "South Korean", "Spanish", "Sri Lankan", "Sudanese", "Surinamer", "Swazi", "Swedish", "Swiss", "Syrian", "Taiwanese", "Tajik", "Tanzanian", "Thai", "Togolese", "Tongan", "Trinidadian or Tobagonian", "Tunisian", "Turkish", "Tuvaluan", "Ugandan", "Ukrainian", "Uruguayan", "Uzbekistani", "Venezuelan", "Vietnamese", "Welsh", "Yemenite", "Zambian", "Zimbabwean",])
-  const [tourist, setTourist] = useState({ "username": "touristx", "email": "touristx@gmail.com", "phone": 25448114, "address": "adresse tourist x....", "age": 31, "nationality": "française", "gender": "Male", "language": "French", "area_of_interest": ["skiing", "hiking"] })
-
+  const [tourist, setTourist] = useState({})
+  const [gender, setGender] = useState("")
+  const [nat, setNat] = useState("")
+  const [language, setLanguage] = useState("")
+  const [interest, setInterest] = useState([])
+  useEffect(() => {
+    console.log(localStorage.getItem("id"))
+    axios({
+      method: 'get',
+      url: `http://localhost:8000/tourist/${localStorage.getItem("id")}`
+    })
+      .then(function (response) {
+        console.log(response)
+        setTourist(response.data)
+        setGender(response.data.gender)
+        setNat(response.data.nationality)
+        setLanguage(response.data.language)
+        setInterest(response.data.interest)
+      });
+  }, [])
   return (
     <>
       <div className="content">
@@ -77,11 +97,12 @@ function User() {
                         <label>Gender</label>
                         <FormControl fullWidth>
                           <Select
-                            value={tourist.gender}
+                            value={gender}
                             size="small"
+                            onChange={(e) => setGender(e.target.value())}
                           >
-                            <MenuItem value="Male">Male</MenuItem>
-                            <MenuItem value="Female">Female</MenuItem>
+                            <MenuItem value={"M"}>M</MenuItem>
+                            <MenuItem value={"F"}>F</MenuItem>
                           </Select>
                         </FormControl>
                       </FormGroup>
@@ -112,8 +133,9 @@ function User() {
                         <label>Nationality</label>
                         <FormControl fullWidth>
                           <Select
-                            value={tourist.language}
+                            value={nat}
                             size="small"
+                            onChange={(e) => setNat(e.target.value)}
                           >
                             {nationality.map((nat) => {
                               return (
@@ -129,8 +151,9 @@ function User() {
                         <label>Language</label>
                         <FormControl fullWidth>
                           <Select
-                            value={tourist.language}
+                            value={language}
                             size="small"
+                            onChange={(e) => setLanguage(e.target.value)}
                           >
                             {languages.map((lang) => {
                               return (
@@ -145,27 +168,15 @@ function User() {
                   <Row>
                     <Col md="12">
                       <FormGroup>
-                        <label>Address</label>
-                        <Input
-                          defaultValue="Melbourne, Australia"
-                          placeholder="Home Address"
-                          type="text"
-                        />
-                      </FormGroup>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col md="12">
-                      <FormGroup>
 
                         <label>Area of interest</label>
                         <div>
 
-                          {tourist.area_of_interest.map((element) => {
+                          {interest.map((element) => {
 
                             return (
                               <Chip
-                                label={element}
+                                label={element.name}
                                 style={{ marginRight: "2%" }}
                               />
                             );

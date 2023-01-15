@@ -59,7 +59,7 @@ export default function TouristRegistration() {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleStep = (step: number) => () => {
+    const handleStep = (step) => () => {
         setActiveStep(step);
     };
 

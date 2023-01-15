@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../assets/css/login.css"
 import logo from "../assets/img/logo1.png"
 import { Button } from "reactstrap";
-import {Link} from "react-router-dom"
+import { Link } from "react-router-dom"
+import axios from "axios"
+import { useHistory } from 'react-router-dom'
+
 export default function Login() {
 
     const [loginEmail, setLoginEmail] = useState("")
     const [loginPassword, setLoginPassword] = useState("")
     const [message, setMessage] = useState("")
+<<<<<<< HEAD
     const handleSubmit = async (event) => {
         event.preventDefault() // prevent the form from refreshing the page
         try {
@@ -34,6 +38,39 @@ export default function Login() {
             console.error("Error:", error);
         }
     };
+=======
+    const [loggedIn, setLoggedIn] = useState(false)
+    let history = useHistory()
+
+    const login = async () => {
+        await axios({
+            method: 'post',
+            url: 'http://localhost:8000/agency/login/',
+            data: {
+                email: loginEmail,
+                password: loginPassword
+            }
+        })
+            .then((res) => {
+                if (res.status == 200) {
+                    setLoggedIn(true)
+                    setMessage("")
+                    localStorage.setItem("id", res.data.id)
+                    history.push('/admin/dashboard')
+                }
+            })
+            .catch((err) => {
+                if (err.response.status == 404) {
+                    setLoggedIn(false)
+                    setMessage(err.response.data.error)
+                }
+            })
+    }
+
+    useEffect(()=>{
+        console.log(message)
+    }, [message])
+>>>>>>> 4f62ef6dd04d833e5b7c2f31dbf918e6d3292b7f
 
     return (
         <div className="auth-wrapper">
@@ -52,17 +89,21 @@ export default function Login() {
                         <label>Password</label>
                         <input type="password" className="form-control" placeholder="Enter password" onChange={(e) => { setLoginPassword(e.target.value) }} />
                     </div>
+                    {(message !== "" && <div style={{color:"red", textAlign: "center"}}>{message}</div>)}
+
                     <div className="auth-button">
-                        <Button
-                            className="btn-round"
-                            color="primary"
-                            type="submit"
-                        >
-                            <Link to="/admin/dashboard">Sign in</Link>
-                        </Button>
+                        <Link to="#">
+                            <Button
+                                className="btn-round"
+                                color="primary"
+                                type="submit"
+                                onClick={login}
+                            >
+                                Sign in
+                            </Button>
+                        </Link>
                     </div>
-                    <div style={{textAlign: "center"}}>you don't have an account ? <Link to="/agency-registration">Sign up</Link></div>
-                    <div className="message">{message}</div>
+                    <div style={{ textAlign: "center" }}>you don't have an account ? <Link to="/agency-registration">Sign up</Link></div>
                 </form>
             </div>
         </div>

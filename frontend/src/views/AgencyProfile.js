@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TextField from '@mui/material/TextField';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import IconButton from '@mui/material/IconButton';
@@ -13,6 +13,7 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
 import Divider from '@mui/material/Divider';
 import { autoPlay } from 'react-swipeable-views-utils';
+import axios from 'axios'
 import {
   Button,
   Card,
@@ -56,6 +57,7 @@ const images = [
 function AgencyProfile() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [agency, setAgency] = useState({})
   const maxSteps = images.length;
 
   const handleNext = () => {
@@ -69,7 +71,17 @@ function AgencyProfile() {
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
-  const [agency, setAgency] = useState({"id": 1, "name": "agence x", "email": "agencex@gmail.com", "password": "123", "phone": 25444658, "fb_url": "", "insta_url": "", "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla viverra posuere elit quis ultrices. Donec ex erat, auctor ut urna nec, maximus tristique libero. Cras quis tortor arcu. Nam hendrerit aliquam turpis, ac placerat eros cursus ut. Aenean hendrerit, mauris ut molestie efficitur, dui tellus dapibus est, vitae volutpat odio neque et dui. Fusce aliquam mauris sit amet dictum pretium. Quisque ac tincidunt elit. Donec ut dignissim dui, vel consectetur lectus.", "city": "Tajerouine",  "address": "jsnfsdllflfw,d", "country": "Tunisia", "state": "Kef" })
+
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: `http://localhost:8000/agency/${localStorage.getItem("id")}`
+    })
+      .then(function (response) {
+        console.log(response)
+        setAgency(response.data)
+      });
+  }, [])
   return (
     <>
       <div className="content">
@@ -77,7 +89,7 @@ function AgencyProfile() {
           <Col md="5">
             <Card className="card-user">
               <CardBody>
-                <div className="author" style={{marginTop:"5%"}}>
+                <div className="author" style={{ marginTop: "5%" }}>
                   <img
                     alt="..."
                     className="avatar border-gray"
@@ -86,7 +98,7 @@ function AgencyProfile() {
                   <h5 className="title">{agency.name}</h5>
                 </div>
                 <Row style={{ justifyContent: "center" }}>
-                  <a href={agency.fb_url}>
+                  <a href={agency.facebook_url}>
                     <IconButton
                       edge="start"
                       color="inherit"
@@ -95,7 +107,7 @@ function AgencyProfile() {
                       <FacebookIcon />
                     </IconButton>
                   </a>
-                  <a href={agency.insta_url}>
+                  <a href={agency.instagram_url}>
                     <IconButton
                       edge="start"
                       color="inherit"
@@ -104,7 +116,7 @@ function AgencyProfile() {
                       <InstagramIcon />
                     </IconButton>
                   </a>
-                  </Row>
+                </Row>
                 <hr />
                 <h5>Gallery</h5>
                 <Box sx={{ maxWidth: 400, flexGrow: 1 }}>
@@ -163,109 +175,107 @@ function AgencyProfile() {
                     }
                   />
                 </Box>
-                </CardBody>
+              </CardBody>
 
-          </Card>
-        </Col>
-        <Col md="7">
-          <Card className="card-user">
-            <CardBody>
-              <Form>
-                <Row>
-                  <Col md="12">
-                    <FormGroup>
-                      <label htmlFor="exampleInputEmail1">
-                        Description
-                      </label>
-                      <TextField
-                        id="outlined-textarea"
-                        placeholder="Placeholder"
-                        defaultValue={agency.description}
-                        style={{
-                          width: "95%",
-                          marginRight: "auto",
-                          marginLeft: "auto"
-                        }}
-                        multiline
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col md="6">
-                    <FormGroup>
-                      <label htmlFor="exampleInputEmail1">
-                        Email address
-                      </label>
-                      <Input placeholder="Email" type="email" defaultValue={agency.email} />
-                    </FormGroup>
-                  </Col>
-                  <Col md="6">
-                    <FormGroup>
-                      <label htmlFor="exampleInputEmail1">
-                        Phone number
-                      </label>
-                      <Input placeholder="phonee" defaultValue={agency.phone} />
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col md="12">
-                    <FormGroup>
-                      <label>Address</label>
-                      <Input
-                        defaultValue={agency.address}
-                        placeholder="Home Address"
-                        type="text"
-                      />
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col className="pr-1" md="4">
-                    <FormGroup>
-                      <label>City</label>
-                      <Input
-                        placeholder="City"
-                        type="text"
-                        defaultValue={agency.city}
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="px-1" md="4">
-                    <FormGroup>
-                      <label>Country</label>
-                      <Input
-                        defaultValue={agency.country}
-                        placeholder="Country"
-                        type="text"
-                      />
-                    </FormGroup>
-                  </Col>
-                  <Col className="pl-1" md="4">
-                    <FormGroup>
-                      <label>Postal Code</label>
-                      <Input placeholder="ZIP Code" type="number" defaultValue={agency.zip} />
-                    </FormGroup>
-                  </Col>
-                </Row>
-                <Row>
-                  <div className="update ml-auto mr-auto">
-                    <Button
-                      className="btn-round"
-                      color="primary"
-                      type="submit"
-                    >
-                      Update Profile
-                    </Button>
-                  </div>
-                </Row>
-              </Form>
-            </CardBody>
-          </Card>
-        </Col>
-      </Row>
-    </div>
+            </Card>
+          </Col>
+          <Col md="7">
+            <Card className="card-user">
+              <CardBody>
+                <Form>
+                  <Row>
+                    <Col md="12">
+                      <FormGroup>
+                        <label htmlFor="exampleInputEmail1">
+                          Description
+                        </label>
+                        <TextField
+                          id="outlined-textarea"
+                          placeholder="Placeholder"
+                          defaultValue={agency.description}
+                          style={{
+                            width: "95%",
+                            marginRight: "auto",
+                            marginLeft: "auto"
+                          }}
+                          multiline
+                        />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col md="6">
+                      <FormGroup>
+                        <label htmlFor="exampleInputEmail1">
+                          Email address
+                        </label>
+                        <Input placeholder="Email" type="email" defaultValue={agency.email} />
+                      </FormGroup>
+                    </Col>
+                    <Col md="6">
+                      <FormGroup>
+                        <label htmlFor="exampleInputEmail1">
+                          Phone number
+                        </label>
+                        <Input placeholder="phonee" defaultValue={agency.phone} />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="pr-1" md="3">
+                      <FormGroup>
+                        <label>Country</label>
+                        <Input
+                          placeholder="Country"
+                          type="text"
+                          defaultValue={agency.country}
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="px-1" md="3">
+                      <FormGroup>
+                        <label>State</label>
+                        <Input
+                          defaultValue={agency.state}
+                          placeholder="State"
+                          type="text"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pl-1" md="3">
+                      <FormGroup>
+                        <label>City</label>
+                        <Input
+                          defaultValue={agency.city}
+                          placeholder="City"
+                          type="text"
+                        />
+                      </FormGroup>
+                    </Col>
+                    <Col className="pl-1" md="3">
+                      <FormGroup>
+                        <label>Postal Code</label>
+                        <Input placeholder="ZIP Code" type="number" defaultValue={agency.postalcode} />
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <div className="update ml-auto mr-auto">
+                      <Button
+                        className="btn-round"
+                        color="primary"
+                        type="submit"
+                      >
+                        Update Profile
+                      </Button>
+                    </div>
+                  </Row>
+                </Form>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </div>
     </>
   );
 }

@@ -2,23 +2,28 @@ from rest_framework import serializers
 
 from .models import *
 
+class InterestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Interest
+        fields = ('id', 'name')
+
 class TouristSerializer(serializers.ModelSerializer):
+    interest = InterestSerializer(read_only=True, many=True)
     class Meta:
         model = Tourist
-        fields = ['username','email','password','nationality','phone','age','language','gender']
-
+        fields = ('id','username','email','password','nationality','phone','age','language','gender','image', 'interest')
 
 
 class TravelAgencySerializer(serializers.ModelSerializer):
     class Meta:
         model = TravelAgency
-        fields = ['username', 'email', 'password', 'city','postalcode','country','age','gender']
+        fields = ['name', 'email', 'password', 'phone', 'state', 'city','postalcode','country']
 
 
 class ProgramsTableSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProgramsTable
-        fields = ['id','title','date','description','nbinscriptions','price','deadline','capacity','gallery','payment']
+        fields = ['id','title','date','description','nbinscriptions','price','deadline','capacity','gallery', 'agency']
 
 class ProgramsLocationsSerializer(serializers.ModelSerializer):
     class Meta:

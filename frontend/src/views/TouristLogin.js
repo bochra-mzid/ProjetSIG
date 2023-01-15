@@ -3,12 +3,41 @@ import "../assets/css/login.css"
 import logo from "../assets/img/logo1.png"
 import { Button } from "reactstrap";
 import { Link } from "react-router-dom"
+import axios from 'axios'
+import { useHistory } from 'react-router-dom'
+
 export default function Login() {
 
     const [loginEmail, setLoginEmail] = useState("")
     const [loginPassword, setLoginPassword] = useState("")
     const [message, setMessage] = useState("")
+    const [loggedIn, setLoggedIn] = useState(false)
+    let history = useHistory()
 
+    const login = async () => {
+        await axios({
+            method: 'post',
+            url: 'http://localhost:8000/tourist/login/',
+            data: {
+                email: loginEmail,
+                password: loginPassword
+            }
+        })
+            .then((res) => {
+                if (res.status == 200) {
+                    localStorage.setItem("id", res.data.id)
+                    setLoggedIn(true)
+                    setMessage("")
+                    history.push('/tourist/dashboard-tourist')
+                }
+            })
+            .catch((err) => {
+                if (err.response.status == 404) {
+                    setLoggedIn(false)
+                    setMessage(err.response.data.error)
+                }
+            })
+    }
     return (
         <div className="auth-wrapper">
             <div className="auth-inner">
@@ -26,19 +55,22 @@ export default function Login() {
                         <label>Password</label>
                         <input type="password" className="form-control" placeholder="Enter password" onChange={(e) => { setLoginPassword(e.target.value) }} />
                     </div>
+                    {(message !== "" && <div style={{color:"red", textAlign: "center"}}>{message}</div>)}
+
                     <div className="auth-button">
-                        <Link to="/tourist/dashboard-tourist">
+                    <Link to="#">
+
                             <Button
                                 className="btn-round"
                                 color="primary"
                                 type="submit"
+                                onClick={login}
                             >
                                 Sign in
                             </Button>
-                        </Link>
+                            </Link>
                     </div>
                     <div style={{ textAlign: "center" }}>you don't have an account ? <Link to="/tourist-registration">Sign up</Link></div>
-                    <div className="message">{message}</div>
                 </form>
             </div>
         </div>
