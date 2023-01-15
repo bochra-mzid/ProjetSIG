@@ -79,7 +79,7 @@ function AgencyProfile() {
     })
       .then(function (response) {
         console.log(response)
-        setAgency(response.data[0])
+        setAgency(response.data)
       });
   }, [])
   return (

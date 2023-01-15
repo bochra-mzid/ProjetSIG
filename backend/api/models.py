@@ -4,6 +4,10 @@ from datetime import datetime
 # Create your models here.
 
 #TouristRegistration
+class Interest(models.Model):
+    name = models.CharField(max_length=50)
+    def _str_(self):
+        return self.name
 class Tourist(models.Model):
     username = models.CharField(max_length=50,null=False, blank=False)
     email = models.EmailField(max_length=50,unique=True, null=False, blank=False)

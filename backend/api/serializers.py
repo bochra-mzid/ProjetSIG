@@ -2,7 +2,13 @@ from rest_framework import serializers
 
 from .models import *
 
+class InterestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Interest
+        fields = ('id', 'name')
+
 class TouristSerializer(serializers.ModelSerializer):
+    interest = InterestSerializer(read_only=True, many=True)
     class Meta:
         model = Tourist
         fields = ('id','username','email','password','nationality','phone','age','language','gender','image','interest')

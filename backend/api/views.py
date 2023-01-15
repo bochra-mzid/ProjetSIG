@@ -11,7 +11,6 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework import permissions
 from .models import TravelAgency
-from .serializers import TravelAgencySerializer
 
 
 class TouristLoginView(views.APIView):
@@ -43,6 +42,12 @@ class AgencyLoginView(views.APIView):
         except TravelAgency.DoesNotExist:
             return Response({"error": "Invalid Credentials"}, status=404)
 
+class InterestApiView(APIView):
+    def get(self, request, *args, **kwargs):
+        interests = Interest.objects.all()
+        serializer = InterestSerializer(interests, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
 
 #SignUp a tourist
 class TouristSignupView(views.APIView):
