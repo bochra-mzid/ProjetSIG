@@ -23,6 +23,17 @@ class TravelAgencyApiView(APIView):
         except TravelAgency.DoesNotExist:
             return None
 
+class TouristApiView(APIView):
+    def get(self, request, *args, **kwargs):
+        agencies = Tourist.objects.all()
+        serializer = TouristSerializer(agencies, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    def get_object(self, tourist_id):
+        try:
+            return Tourist.objects.get(id=tourist_id)
+        except Tourist.DoesNotExist:
+            return None
+
 class TouristLoginView(views.APIView):
     def post(self, request, format=None):
         email = request.data.get("email")
