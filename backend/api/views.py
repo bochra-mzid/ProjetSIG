@@ -53,6 +53,23 @@ class AgencyLoginView(views.APIView):
             return Response({"error": "Invalid Credentials"}, status=404)
 
 
+#SignUp a tourist
+class TouristSignupView(views.APIView):
+    def post(self, request, format=None):
+        username = request.data.get("username")
+        email = request.data.get("email")
+        password = request.data.get("password")
+        password = password
+        nationality = request.data.get("nationality", "")
+        phone = request.data.get("phone", "")
+        age = request.data.get("age", "")
+        language = request.data.get("language", "")
+        gender = request.data.get("gender", "")
+        interest = request.data.get("interest", "")
+        image = request.data.get("image", "")
+        tourist = Tourist.objects.create(username=username, email=email, password=password, nationality=nationality, phone=phone, age=age, language=language, gender=gender, interest=interest, image=image)
+        return Response({"message": "Tourist created"})
+
 
 #class TraveAgencyView(viewsets.ModelViewSet):
     #serializer_class = TravelAgencySerializer

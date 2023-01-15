@@ -12,6 +12,7 @@ router = routers.DefaultRouter()
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('tourist/login/', views.TouristLoginView.as_view()),
+    path('tourist/signup/', views.TouristSignupView.as_view(), name='signup'),
     path('agency/login/', views.AgencyLoginView.as_view()),
     path('agencies/', views.TravelAgencyApiView.as_view()),
     path('agency/<int:agency_id>/', views.TravelAgencyApiView.as_view()),
