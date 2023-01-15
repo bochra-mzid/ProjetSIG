@@ -140,55 +140,60 @@ function Dashboard() {
           </Col>
         </Row>
         <Row>
-          <Col md="8">
-            <Card className="card-chart">
-              <CardHeader>
-                <CardTitle tag="h5">Customer Tunrnout</CardTitle>
-                <p className="card-category">Line Chart with Points</p>
-              </CardHeader>
-              <CardBody>
-                <Line
-                  data={dashboardNASDAQChart.data}
-                  options={dashboardNASDAQChart.options}
-                  width={400}
-                  height={100}
-                />
-              </CardBody>
-              <CardFooter>
-                <div className="chart-legend">
-                  <i className="fa fa-circle text-info" /> Winter{" "}
-                  <i className="fa fa-circle text-warning" /> Summer
-                </div>
-                <hr />
-                <div className="card-stats">
-                  <i className="fa fa-check" /> Data information certified
-                </div>
-              </CardFooter>
-            </Card>
-          </Col>
-          <Col md="4">
-            <Card>
-              <CardHeader>
-                <CardTitle tag="h5">Customer Statistics</CardTitle>
-                
-              </CardHeader>
-              
-            </Card>
-          </Col>
-          
-        </Row>
-        <Row>
-          <Col md="12">
-            <Card>
-              <CardHeader>
-                <CardTitle tag="h5">Reviews</CardTitle>
-                
-              </CardHeader>
-              
-              
-            </Card>
-          </Col>
-        </Row>
+  <Col md={{ size: 8, offset: 2 }}>
+    <Card className="card-chart">
+      <CardHeader>
+        <CardTitle tag="h5">Customer Tunrnout</CardTitle>
+        <p className="card-category">Line Chart with Points</p>
+      </CardHeader>
+      <CardBody>
+        <Line
+          data={dashboardNASDAQChart.data}
+          options={dashboardNASDAQChart.options}
+          width={400}
+          height={100}
+        />
+      </CardBody>
+      <CardFooter>
+        <div className="chart-legend">
+          <i className="fa fa-circle text-info" /> Winter{" "}
+          <i className="fa fa-circle text-warning" /> Summer
+        </div>
+        <hr />
+        <div className="card-stats">
+          <i className="fa fa-check" /> Data information certified
+        </div>
+      </CardFooter>
+    </Card>
+  </Col>
+</Row>
+<Row>
+  <Col md="12">
+    <Card>
+      <CardHeader>
+        <CardTitle tag="h5">Feedback</CardTitle>
+      </CardHeader>
+      <CardBody>
+        <ul>
+          <li>
+            <p>🤗 Feedback 1:</p>
+            <span>The hotel was really top</span>
+          </li>
+          <li>
+            <p>😍 Feedback 2:</p>
+            <span>The service was excellent</span>
+          </li>
+          <li>
+            <p>🤗 Feedback 3:</p>
+            <span>I would recommend it to my friends</span>
+          </li>
+        </ul>
+      </CardBody>
+    </Card>
+  </Col>
+</Row>
+
+
         
       </div>
     </>

@@ -24,7 +24,7 @@ function Dashboard() {
     <>
       <div className="content">
         <h4>A Propos De <b>We Travel.Tn :</b> </h4>
-          <p><u> <b> We Travel</b></u> est une agence de voyages en ligne Catégorie A agréée
+          <p><u> <b> We Travel</b></u> est une agence de voyages en ligne Catégorie "A" agréée
              par l’office National de tourisme tunisien et membre de la Fédération Tunisienne des agences de voyages (FTAV) 
              et créé par une équipe d’anciens professionnels qui a misé sur une nouvelle formule de tourisme :
               Le client crée son produit voyage. Elle maitrise également la formule classique destinée au client amateur du produit clé en main, 
@@ -140,55 +140,60 @@ function Dashboard() {
           </Col>
         </Row>
         <Row>
-          <Col md="8">
-            <Card className="card-chart">
-              <CardHeader>
-                <CardTitle tag="h5">Customer Tunrnout</CardTitle>
-                <p className="card-category">Line Chart with Points</p>
-              </CardHeader>
-              <CardBody>
-                <Line
-                  data={dashboardNASDAQChart.data}
-                  options={dashboardNASDAQChart.options}
-                  width={400}
-                  height={100}
-                />
-              </CardBody>
-              <CardFooter>
-                <div className="chart-legend">
-                  <i className="fa fa-circle text-info" /> Winter{" "}
-                  <i className="fa fa-circle text-warning" /> Summer
-                </div>
-                <hr />
-                <div className="card-stats">
-                  <i className="fa fa-check" /> Data information certified
-                </div>
-              </CardFooter>
-            </Card>
-          </Col>
-          <Col md="4">
-            <Card>
-              <CardHeader>
-                <CardTitle tag="h5">Customer Statistics</CardTitle>
-                
-              </CardHeader>
-              
-            </Card>
-          </Col>
-          
-        </Row>
-        <Row>
-          <Col md="12">
-            <Card>
-              <CardHeader>
-                <CardTitle tag="h5">Reviews</CardTitle>
-                
-              </CardHeader>
-              
-              
-            </Card>
-          </Col>
-        </Row>
+  <Col md={{ size: 8, offset: 2 }}>
+    <Card className="card-chart">
+      <CardHeader>
+        <CardTitle tag="h5">Customer Tunrnout</CardTitle>
+        <p className="card-category">Line Chart with Points</p>
+      </CardHeader>
+      <CardBody>
+        <Line
+          data={dashboardNASDAQChart.data}
+          options={dashboardNASDAQChart.options}
+          width={400}
+          height={100}
+        />
+      </CardBody>
+      <CardFooter>
+        <div className="chart-legend">
+          <i className="fa fa-circle text-info" /> Winter{" "}
+          <i className="fa fa-circle text-warning" /> Summer
+        </div>
+        <hr />
+        <div className="card-stats">
+          <i className="fa fa-check" /> Data information certified
+        </div>
+      </CardFooter>
+    </Card>
+  </Col>
+</Row>
+<Row>
+  <Col md="12">
+    <Card>
+      <CardHeader>
+        <CardTitle tag="h5">Feedback</CardTitle>
+      </CardHeader>
+      <CardBody>
+        <ul>
+          <li>
+            <p>🤗 Feedback 1:</p>
+            <span>The hotel was really top</span>
+          </li>
+          <li>
+            <p>😍 Feedback 2:</p>
+            <span>The service was excellent</span>
+          </li>
+          <li>
+            <p>🤗 Feedback 3:</p>
+            <span>I would recommend it to my friends</span>
+          </li>
+        </ul>
+      </CardBody>
+    </Card>
+  </Col>
+</Row>
+
+
         
       </div>
     </>

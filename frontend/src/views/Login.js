@@ -8,6 +8,32 @@ export default function Login() {
     const [loginEmail, setLoginEmail] = useState("")
     const [loginPassword, setLoginPassword] = useState("")
     const [message, setMessage] = useState("")
+    const handleSubmit = async (event) => {
+        event.preventDefault() // prevent the form from refreshing the page
+        try {
+            const response = await fetch("http://localhost:8000/api/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: loginEmail,
+                    password: loginPassword,
+                }),
+            });
+            const data = await response.json();
+            if (response.ok) {
+                // handle successful login
+                localStorage.setItem("token", data.token);
+                // redirect the user to the dashboard
+                window.location.href = "/admin/dashboard"
+            } else {
+                setMessage(data.message)
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    };
 
     return (
         <div className="auth-wrapper">
