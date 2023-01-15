@@ -105,6 +105,15 @@ class TravelagencyRetrieveApiView(RetrieveAPIView):
         except TravelAgency.DoesNotExist:
             return None
 
+#Update Tourist
+class TouristUpdateView(APIView):
+    def put(self, request, tourist_id, format=None):
+        tourist = Tourist.objects.get(id=tourist_id)
+        serializer = TouristSerializer(tourist, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 #class TraveAgencyView(viewsets.ModelViewSet):
     #serializer_class = TravelAgencySerializer
     #queryset = TravelAgency.objects.all()

@@ -15,6 +15,7 @@ urlpatterns = [
     path('tourist/signup/', views.TouristSignupView.as_view(), name='signup'),
     path('tourists/', views.TouristListApiView.as_view()),
     path('tourist/<int:id>/', views.TouristRetrieveApiView.as_view()),
+     path('touristupdate/<int:tourist_id>/', views.TouristUpdateView.as_view()),
     path('agency/login/', views.AgencyLoginView.as_view()),
     path('agency/signup/', views.TravelagencySignUpView.as_view()),
     path('agencies/', views.TravelagencyListApiView.as_view()),
