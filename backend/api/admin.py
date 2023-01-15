@@ -20,8 +20,8 @@ class ProgramsTableAdmin(admin.ModelAdmin):
     list_display =('id','title','date','description','nbinscriptions','price','deadline','capacity','gallery','payment')
     
 class ProgramsLocationsAdmin(admin.ModelAdmin):
-    list_display = ('program','id','name','duration','datedebut','datefin','category','details','longitude','latitude')
-    list_filter = ('program', 'category')
+    list_display = ('program','id','name','datedebut','datefin','details','longitude','latitude')
+    list_filter = ('program','name')
 # Register your models here.
 
 class InterestAdmin(admin.ModelAdmin):
