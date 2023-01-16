@@ -25,6 +25,10 @@ urlpatterns = [
     path('agencies/', views.TravelagencyListApiView.as_view()),
     path('agency/<int:id>/', views.TravelagencyRetrieveApiView.as_view()),
     path('programs/<int:id>/', views.ProgramsListApiView.as_view()),
+
+    path('programs-locations/', views.ProgramsLocationsApiView.as_view()),
+    path('api/', include(router.urls)),
+    path('', include(router.urls)),
     path('interests/', views.InterestApiView.as_view()),
     path('api/', include(router.urls)),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
