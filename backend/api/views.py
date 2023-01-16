@@ -11,6 +11,7 @@ from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework import permissions
 from .models import TravelAgency
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 class TouristLoginView(views.APIView):
@@ -51,6 +52,7 @@ class InterestApiView(APIView):
 
 #SignUp a tourist
 class TouristSignupView(views.APIView):
+    parser_classes = (MultiPartParser, FormParser)
     def post(self, request, format=None):
         username = request.data.get("username")
         email = request.data.get("email")

@@ -38,13 +38,12 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function TouristRegistration() {
     let fileObj = [];
     let fileArray = [];
-    const [activeStep, setActiveStep] = React.useState(0);
+    const [activeStep, setActiveStep] = useState(0);
     const [completed, setCompleted] = useState(false)
     const [photos, setPhotos] = useState(null);
     const [name, setName] = useState("")
     const [country, setCountry] = useState("")
     const [city, setCity] = useState("")
-    const [postalCode, setPostalCode] = useState(0)
     const [agenState, setAgenState] = useState("")
     const [phone, setPhone] = useState(null)
     const [email, setEmail] = useState("")
@@ -53,13 +52,16 @@ export default function TouristRegistration() {
     const [states, setStates] = useState([])
     const [cities, setCities] = useState([])
     const [message, setMessage] = useState("")
-    const steps = ['', '', ''];
+    const steps = ['', '', '', ''];
     const [data, setData] = useState([])
     const [showPassword, setShowPassword] = useState(false);
     const [description, setDescription] = useState("")
     const [fb, setFb] = useState("")
     const [insta, setInsta] = useState("")
+    const [image, setImage] = useState("")
     let history = useHistory()
+    const [file, setFile] = useState("")
+
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -94,9 +96,6 @@ export default function TouristRegistration() {
         setPhotos(fileArray);
     };
 
-    const uploadFiles = e => {
-        e.preventDefault();
-    };
     const totalSteps = () => {
         return steps.length;
     };
@@ -117,22 +116,33 @@ export default function TouristRegistration() {
         setActiveStep(step);
     };
 
+    const handleImageChange = (e) => {
+        console.log(e)
+        setImage(e.target.files[0]);
+        setFile(URL.createObjectURL(e.target.files[0]));
+
+    };
+
     const handleComplete = async () => {
+        let form_data = new FormData();
+        form_data.append('image', image, image.name);
+        form_data.append('name', name);
+        form_data.append('email', email);
+        form_data.append('password', password);
+        form_data.append('confirm', confirm);
+        form_data.append('phone', phone);
+        form_data.append('country', country);
+        form_data.append('state', agenState);
+        form_data.append('city', city);
+        form_data.append('description', description);
+        form_data.append('facebook_url', fb);
+        form_data.append('instagram_url', insta);
+
         await axios({
             method: 'post',
             url: 'http://localhost:8000/agency/signup/',
-            data: {
-                name: name,
-                email: email,
-                password: password,
-                country: country,
-                state: agenState,
-                city: city,
-                phone: phone,
-                description: description,
-                facebook_url: fb,
-                instagram_url: insta
-            }
+            headers: { "Content-Type": "multipart/form-data" },
+            data: form_data
         })
             .then((res) => {
                 if (res.status == 200) {
@@ -360,6 +370,18 @@ export default function TouristRegistration() {
                                 </div>
                                 }
                                 {activeStep == 2 && <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginTop: "5%", marginBottom: "3%" }}>
+                                    <label htmlFor="photo-upload" className="custom-file-upload fas">
+                                        <div className="img-wrap img-upload" >
+                                        {file=="" ? <img for="photo-upload" src={profile} /> : <img src={file}/>}
+                                        </div>
+                                        <input id="photo-upload" type="file"
+                                            onChange={(e) => {
+                                                handleImageChange(e);
+                                            }} />
+                                    </label>
+                                    <div>Please add a profile picture</div>
+                                </div>}
+                                {activeStep == 3 && <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginTop: "5%", marginBottom: "3%" }}>
                                     <div style={{ marginBottom: "3%" }}>Add photos to you gallery</div>
                                     <form>
                                         <div className="form-group">

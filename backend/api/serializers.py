@@ -9,15 +9,17 @@ class InterestSerializer(serializers.ModelSerializer):
 
 class TouristSerializer(serializers.ModelSerializer):
     interest = InterestSerializer(read_only=True, many=True)
+    image = serializers.ImageField(required=False)
     class Meta:
         model = Tourist
         fields = ('id','username','email','password','nationality','phone','age','language','gender','image', 'interest')
 
 
 class TravelAgencySerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(required=False)
     class Meta:
         model = TravelAgency
-        fields = ['name', 'email', 'password', 'phone', 'state', 'city','postalcode','country', 'description']
+        fields = ['name', 'email', 'password', 'phone', 'state', 'city','postalcode','country', 'description', 'image']
 
 
 class ProgramsTableSerializer(serializers.ModelSerializer):

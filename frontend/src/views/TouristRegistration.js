@@ -46,7 +46,7 @@ export default function TouristRegistration() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirm, setConfirm] = useState("")
-    const [phone, setPhone] = useState("")
+    const [phone, setPhone] = useState(0)
     const [nationality, setNationality] = useState("")
     const [language, setLanguage] = useState("")
     const [gender, setGender] = useState("")
@@ -55,6 +55,8 @@ export default function TouristRegistration() {
     let history = useHistory()
     const [showPassword, setShowPassword] = useState(false);
     const [message, setMessage] = useState("")
+    const [image, setImage] = useState("")
+    const [file, setFile] = useState("")
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -82,7 +84,7 @@ export default function TouristRegistration() {
             setMessage("Please enter all the required fields ")
         }
 
-        else if (activeStep == 0 && password!=confirm){
+        else if (activeStep == 0 && password != confirm) {
             setMessage("Password missmatch")
         }
         else {
@@ -109,21 +111,23 @@ export default function TouristRegistration() {
     };
 
     const handleComplete = async () => {
-        console.log(interests)
+        let form_data = new FormData();
+        form_data.append('image', image, image.name);
+        form_data.append('username', username);
+        form_data.append('email', email);
+        form_data.append('password', password);
+        form_data.append('confirm', confirm);
+        form_data.append('phone', phone);
+        form_data.append('age', age);
+        form_data.append('nationality', nationality);
+        form_data.append('language', language);
+        form_data.append('gender', gender);
+        form_data.append('interest', interests);
         await axios({
             method: 'post',
             url: 'http://localhost:8000/tourist/signup/',
-            data: {
-                username: username,
-                email: email,
-                password: password,
-                nationality: nationality,
-                phone: phone,
-                age: age,
-                language: language,
-                gender: gender,
-                interest: interests
-            }
+            headers: { "Content-Type": "multipart/form-data" },
+            data: form_data
         })
             .then((res) => {
                 if (res.status == 200) {
@@ -137,7 +141,6 @@ export default function TouristRegistration() {
             })
     };
 
-
     const handleReset = () => {
         setActiveStep(0);
         setCompleted({});
@@ -146,6 +149,14 @@ export default function TouristRegistration() {
     const handleAddInterst = (element) => {
         setInterests([...interests, element.id])
     }
+
+    const handleImageChange = (e) => {
+        console.log(e)
+        setImage(e.target.files[0]);
+        setFile(URL.createObjectURL(e.target.files[0]));
+
+    };
+
 
     return (
         <div className="tourist-registration-page">
@@ -230,7 +241,8 @@ export default function TouristRegistration() {
                                                             )
                                                         })}
                                                     </Select>
-                                                </FormControl>                                            </div>
+                                                </FormControl>
+                                            </div>
                                             <div class="input-box">
                                                 <span class="deatils">Password*</span>
                                                 <OutlinedInput
@@ -251,7 +263,8 @@ export default function TouristRegistration() {
                                                             </IconButton>
                                                         </InputAdornment>
                                                     }
-                                                />                                            </div>
+                                                />
+                                            </div>
                                             <div class="input-box">
                                                 <span class="deatils">Confirm Password*</span>
                                                 <OutlinedInput
@@ -295,14 +308,17 @@ export default function TouristRegistration() {
                                 {activeStep == 1 && <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginTop: "5%", marginBottom: "3%" }}>
                                     <label htmlFor="photo-upload" className="custom-file-upload fas">
                                         <div className="img-wrap img-upload" >
-                                            <img for="photo-upload" src={profile} />
+                                            {file=="" ? <img for="photo-upload" src={profile} /> : <img src={file}/>}
                                         </div>
-                                        <input id="photo-upload" type="file" />
+                                        <input id="photo-upload" type="file"
+                                            onChange={(e) => {
+                                                handleImageChange(e);
+                                            }} />
                                     </label>
                                     <div>Please add a profile picture</div>
                                 </div>}
                                 {activeStep == 2 && <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", marginTop: "5%", marginBottom: "10%" }}>
-                                    <div style={{ marginBottom: "5%" }}>Please select ....</div>
+                                    <div style={{ marginBottom: "5%" }}>Please select your area of interest</div>
                                     <Grid container spacing={3} style={{ width: "70%" }}>
                                         {allInterests.map((element) => {
                                             return (

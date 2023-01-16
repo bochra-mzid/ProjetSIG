@@ -75,7 +75,7 @@ function User() {
                     <img
                       alt="..."
                       className="avatar border-gray"
-                      src={require("assets/img/mike.jpg")}
+                      src={tourist.image}
                     />
                     <h5 className="title">{tourist.username}</h5>
                   </a>
