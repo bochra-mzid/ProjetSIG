@@ -21,12 +21,9 @@ urlpatterns = [
     path('agencies/', views.TravelagencyListApiView.as_view()),
     path('agency/<int:id>/', views.TravelagencyRetrieveApiView.as_view()),
     path('programs/<int:id>/', views.ProgramsListApiView.as_view()),
+    path('programs-locations/', views.ProgramsLocationsApiView.as_view()),
     path('api/', include(router.urls)),
-<<<<<<< HEAD
     path('', include(router.urls)),
     
    
-=======
-    path('', include(router.urls)),  
->>>>>>> 4f62ef6dd04d833e5b7c2f31dbf918e6d3292b7f
 ]

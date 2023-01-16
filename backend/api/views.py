@@ -127,6 +127,24 @@ class ProgramsListApiView(APIView):
         print(programs)
         serializer = ProgramsTableSerializer(programs, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    def post(self, request, *args, **kwargs):
+        serializer = ProgramsTableSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ProgramsLocationsApiView(APIView):
+    def get(self, request, *args, **kwargs):
+        programs_locations = ProgramsLocations.objects.all()
+        serializer = ProgramsLocationsSerializer(programs_locations, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    def post(self, request, *args, **kwargs):
+        serializer = ProgramsLocationsSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 #class TraveAgencyView(viewsets.ModelViewSet):
