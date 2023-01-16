@@ -6,21 +6,15 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import { useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MobileStepper from '@mui/material/MobileStepper';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import SwipeableViews from 'react-swipeable-views';
-import Divider from '@mui/material/Divider';
 import { autoPlay } from 'react-swipeable-views-utils';
 import axios from 'axios'
 import {
   Button,
   Card,
-  CardHeader,
   CardBody,
-  CardFooter,
-  CardTitle,
   FormGroup,
   Form,
   Input,
@@ -72,8 +66,28 @@ function AgencyProfile() {
     setActiveStep(step);
   };
 
-  useEffect(() => {
-    axios({
+
+  const handleUpdate = async (e) => {
+    await axios({
+      method: 'put',
+      url: `http://localhost:8000/agencyupdate/${localStorage.getItem("id")}/`,
+      data: {
+        name: agency.name,
+        email: agency.email,
+        password: agency.password,
+        country: agency.coutry,
+        state: agency.state,
+        city: agency.city,
+        phone: agency.phone,
+        description: agency.description,
+      }
+    })
+      .then(function (response) {
+        console.log(response)
+      });
+  }
+  const getData = async () => {
+    await axios({
       method: 'get',
       url: `http://localhost:8000/agency/${localStorage.getItem("id")}`
     })
@@ -81,6 +95,9 @@ function AgencyProfile() {
         console.log(response)
         setAgency(response.data)
       });
+  }
+  useEffect(() => {
+    getData()
   }, [])
   return (
     <>
@@ -186,19 +203,30 @@ function AgencyProfile() {
                   <Row>
                     <Col md="12">
                       <FormGroup>
+                        <label>
+                          Agency name
+                        </label>
+                        <Input placeholder="phonee" defaultValue={agency.name} onChange={(e) => setAgency({ ...agency, name: e.target.value })} />
+                      </FormGroup>                    
+                      </Col>
+                  </Row>
+                  <Row>
+                    <Col md="12">
+                      <FormGroup>
                         <label htmlFor="exampleInputEmail1">
                           Description
                         </label>
                         <TextField
                           id="outlined-textarea"
-                          placeholder="Placeholder"
                           defaultValue={agency.description}
                           style={{
                             width: "95%",
                             marginRight: "auto",
                             marginLeft: "auto"
                           }}
+                          onChange={(e) => setAgency({ ...agency, description: e.target.value })}
                           multiline
+                          rows={4}
                         />
                       </FormGroup>
                     </Col>
@@ -209,7 +237,8 @@ function AgencyProfile() {
                         <label htmlFor="exampleInputEmail1">
                           Email address
                         </label>
-                        <Input placeholder="Email" type="email" defaultValue={agency.email} />
+                        <Input placeholder="Email" type="email" defaultValue={agency.email} onChange={(e) => setAgency({ ...agency, email: e.target.value })}
+                        />
                       </FormGroup>
                     </Col>
                     <Col md="6">
@@ -217,45 +246,44 @@ function AgencyProfile() {
                         <label htmlFor="exampleInputEmail1">
                           Phone number
                         </label>
-                        <Input placeholder="phonee" defaultValue={agency.phone} />
+                        <Input placeholder="phonee" defaultValue={agency.phone} onChange={(e) => setAgency({ ...agency, phone: e.target.value })} />
                       </FormGroup>
                     </Col>
                   </Row>
                   <Row>
-                    <Col className="pr-1" md="3">
+                    <Col className="pr-1" md="4">
                       <FormGroup>
                         <label>Country</label>
                         <Input
                           placeholder="Country"
                           type="text"
                           defaultValue={agency.country}
+                          onChange={(e) => setAgency({ ...agency, country: e.target.value })}
+
                         />
                       </FormGroup>
                     </Col>
-                    <Col className="px-1" md="3">
+                    <Col className="px-1" md="4">
                       <FormGroup>
                         <label>State</label>
                         <Input
                           defaultValue={agency.state}
                           placeholder="State"
                           type="text"
+                          onChange={(e) => setAgency({ ...agency, state: e.target.value })}
+
                         />
                       </FormGroup>
                     </Col>
-                    <Col className="pl-1" md="3">
+                    <Col className="pl-1" md="4">
                       <FormGroup>
                         <label>City</label>
                         <Input
                           defaultValue={agency.city}
                           placeholder="City"
                           type="text"
+                          onChange={(e) => setAgency({ ...agency, city: e.target.value })}
                         />
-                      </FormGroup>
-                    </Col>
-                    <Col className="pl-1" md="3">
-                      <FormGroup>
-                        <label>Postal Code</label>
-                        <Input placeholder="ZIP Code" type="number" defaultValue={agency.postalcode} />
                       </FormGroup>
                     </Col>
                   </Row>
@@ -265,6 +293,7 @@ function AgencyProfile() {
                         className="btn-round"
                         color="primary"
                         type="submit"
+                        onClick={(e) => handleUpdate(e)}
                       >
                         Update Profile
                       </Button>

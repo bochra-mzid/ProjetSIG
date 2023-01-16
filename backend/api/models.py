@@ -18,10 +18,10 @@ class Tourist(models.Model):
     age = models.IntegerField(null=True, blank=True)
     language = models.CharField(max_length=100,null=True, blank=True)
     GENDER_CHOICES = [
-        ('M', 'Male'),
-        ('F', 'Female'),
+        ('Male', 'Male'),
+        ('Female', 'Female'),
     ]
-    gender = models.CharField(max_length=1, choices=GENDER_CHOICES,null=True, blank=True)
+    gender = models.CharField(max_length=6, choices=GENDER_CHOICES,null=True, blank=True)
     image = models.ImageField(upload_to='uploads/images', null=True, blank=True)
     """INTEREST_CHOICES = [
         ('Sports','Sports'),
@@ -35,7 +35,7 @@ class Tourist(models.Model):
         ('Swimming','Swimming'),
         ('Shopping','Shopping'),
     ]"""
-    interest = models.ManyToManyField(Interest)
+    interest = models.ManyToManyField(Interest, blank=True)
 
     def _str_(self):
         return self.username

@@ -55,7 +55,7 @@ class TouristSignupView(views.APIView):
         username = request.data.get("username")
         email = request.data.get("email")
         password = request.data.get("password")
-        password = password
+        #password = password
         nationality = request.data.get("nationality", "")
         phone = request.data.get("phone", "")
         age = request.data.get("age", "")
@@ -63,7 +63,8 @@ class TouristSignupView(views.APIView):
         gender = request.data.get("gender", "")
         interest = request.data.get("interest", "")
         image = request.data.get("image", "")
-        tourist = Tourist.objects.create(username=username, email=email, password=password, nationality=nationality, phone=phone, age=age, language=language, gender=gender, interest=interest, image=image)
+        tourist = Tourist.objects.create(username=username, email=email, password=password, nationality=nationality, phone=phone, age=age, language=language, gender=gender, image=image)
+        tourist.interest.set(interest)
         return Response({"message": "Tourist created"})
     
 #SignUp a travelagency
@@ -119,6 +120,16 @@ class TouristUpdateView(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class AgencyUpdateView(APIView):
+    def put(self, request, agency_id, format=None):
+        agency = TravelAgency.objects.get(id=agency_id)
+        serializer = TravelAgencySerializer(agency, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class ProgramsListApiView(APIView):
     def get(self, request, *args, **kwargs):
