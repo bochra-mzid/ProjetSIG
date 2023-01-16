@@ -11,34 +11,7 @@ export default function Login() {
     const [loginEmail, setLoginEmail] = useState("")
     const [loginPassword, setLoginPassword] = useState("")
     const [message, setMessage] = useState("")
-<<<<<<< HEAD
-    const handleSubmit = async (event) => {
-        event.preventDefault() // prevent the form from refreshing the page
-        try {
-            const response = await fetch("http://localhost:8000/api/login", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    email: loginEmail,
-                    password: loginPassword,
-                }),
-            });
-            const data = await response.json();
-            if (response.ok) {
-                // handle successful login
-                localStorage.setItem("token", data.token);
-                // redirect the user to the dashboard
-                window.location.href = "/admin/dashboard"
-            } else {
-                setMessage(data.message)
-            }
-        } catch (error) {
-            console.error("Error:", error);
-        }
-    };
-=======
+
     const [loggedIn, setLoggedIn] = useState(false)
     let history = useHistory()
 
@@ -70,7 +43,6 @@ export default function Login() {
     useEffect(()=>{
         console.log(message)
     }, [message])
->>>>>>> 4f62ef6dd04d833e5b7c2f31dbf918e6d3292b7f
 
     return (
         <div className="auth-wrapper">

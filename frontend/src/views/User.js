@@ -42,6 +42,27 @@ function User() {
         setInterest(response.data.interest)
       });
   }, [])
+
+  const handleUpdate = async (e) => {
+    await axios({
+      method: 'put',
+      url: `http://localhost:8000/touristupdate/${localStorage.getItem("id")}/`,
+      data: {
+        username: tourist.username,
+        email: tourist.email,
+        password: tourist.password,
+        nationality: nat,
+        phone: tourist.phone,
+        age: tourist.age,
+        language: language,
+        gender: gender,
+        interest: tourist.interest
+      }
+    })
+      .then(function (response) {
+        console.log(response)
+      });
+  }
   return (
     <>
       <div className="content">
@@ -79,6 +100,7 @@ function User() {
                           defaultValue={tourist.username}
                           placeholder="Username"
                           type="text"
+                          onChange={(e)=>setTourist({...tourist, username: e.target.value})}
                         />
                       </FormGroup>
                     </Col>
@@ -87,7 +109,7 @@ function User() {
                         <label htmlFor="exampleInputEmail1">
                           Email address
                         </label>
-                        <Input placeholder="Email" type="email" defaultValue={tourist.email} />
+                        <Input placeholder="Email" type="email" defaultValue={tourist.email} onChange={(e)=>setTourist({...tourist, email: e.target.value})}/>
                       </FormGroup>
                     </Col>
                   </Row>
@@ -99,10 +121,10 @@ function User() {
                           <Select
                             value={gender}
                             size="small"
-                            onChange={(e) => setGender(e.target.value())}
+                            onChange={(e) => setGender(e.target.value)}
                           >
-                            <MenuItem value={"M"}>M</MenuItem>
-                            <MenuItem value={"F"}>F</MenuItem>
+                            <MenuItem value={"Male"}>Male</MenuItem>
+                            <MenuItem value={"Female"}>Female</MenuItem>
                           </Select>
                         </FormControl>
                       </FormGroup>
@@ -114,6 +136,7 @@ function User() {
                           defaultValue={tourist.age}
                           placeholder="Age"
                           type="number"
+                          onChange={(e)=>setTourist({...tourist, age: e.target.value})}
                         />
                       </FormGroup>
                     </Col>
@@ -123,6 +146,7 @@ function User() {
                         <Input
                           defaultValue={tourist.phone}
                           placeholder="Phone"
+                          onChange={(e)=>setTourist({...tourist, phone: e.target.value})}
                         />
                       </FormGroup>
                     </Col>
@@ -168,10 +192,8 @@ function User() {
                   <Row>
                     <Col md="12">
                       <FormGroup>
-
                         <label>Area of interest</label>
                         <div>
-
                           {interest.map((element) => {
 
                             return (
@@ -191,6 +213,7 @@ function User() {
                         className="btn-round"
                         color="primary"
                         type="submit"
+                        onClick={(e)=>handleUpdate(e)}
                       >
                         Update Profile
                       </Button>
