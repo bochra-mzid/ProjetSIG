@@ -87,6 +87,8 @@ class ProgramsLocations(models.Model):
     details = models.TextField(max_length=100)
     longitude = models.FloatField()
     latitude = models.FloatField()
+    image = models.ImageField(upload_to='uploads/images', null=True, blank=True)
+
     def __str__(self):
         return self.name
     

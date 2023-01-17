@@ -146,12 +146,24 @@ class ProgramsListApiView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+class ProgramsFullListApiView(APIView):
+    def get(self, request, *args, **kwargs):
+        programs = ProgramsTable.objects.all()
+        serializer = ProgramsTableSerializer(programs, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 class ProgramsLocationsApiView(APIView):
-    def get(self, request, *args, **kwargs):
+    """def get(self, request, *args, **kwargs):
         programs_locations = ProgramsLocations.objects.all()
         serializer = ProgramsLocationsSerializer(programs_locations, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)"""
+    def get(self, request, *args, **kwargs):
+        id = self.kwargs['id']
+        locations = ProgramsLocations.objects.filter(program=id)
+        serializer = ProgramsLocationsSerializer(locations, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+class ProgramsLocationsPost(APIView):
     def post(self, request, *args, **kwargs):
         serializer = ProgramsLocationsSerializer(data=request.data)
         if serializer.is_valid():

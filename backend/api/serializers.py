@@ -23,11 +23,13 @@ class TravelAgencySerializer(serializers.ModelSerializer):
 
 
 class ProgramsTableSerializer(serializers.ModelSerializer):
+    gallery = serializers.ImageField(required=False)
     class Meta:
         model = ProgramsTable
-        fields = ['id','title','date','description','nbinscriptions','price','deadline','capacity','gallery', 'agency']
+        fields = ['id','title','date','description','nbinscriptions','price','deadline','capacity','gallery', 'agency', 'gallery']
 
 class ProgramsLocationsSerializer(serializers.ModelSerializer):
+    image = serializers.ImageField(required=False)
     class Meta:
         model = ProgramsLocations
-        fields = ['program','id','name','duration','datedebut','datefin','category','details','longitude','latitude']
+        fields = ['program','id','name','datedebut','datefin','details','longitude','latitude', 'image']

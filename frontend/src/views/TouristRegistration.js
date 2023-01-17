@@ -111,6 +111,7 @@ export default function TouristRegistration() {
     };
 
     const handleComplete = async () => {
+        console.log(interests)
         let form_data = new FormData();
         form_data.append('image', image, image.name);
         form_data.append('username', username);

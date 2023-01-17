@@ -138,7 +138,7 @@ function Agencies() {
                                         <img
                                             alt="..."
                                             className="avatar border-gray"
-                                            src={require("assets/img/mike.jpg")}
+                                            src={agency.image}
                                         />
                                         <h5 className="title">{agency.name}</h5>
                                     </a>

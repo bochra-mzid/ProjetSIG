@@ -4,10 +4,6 @@ import filterFactory, { textFilter, selectFilter } from 'react-bootstrap-table2-
 
 import { Button } from "reactstrap";
 import Dialog from '@mui/material/Dialog';
-import ListItemText from '@mui/material/ListItemText';
-import ListItem from '@mui/material/ListItem';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
@@ -59,6 +55,7 @@ function ProgramsTable() {
   const [tourists, setTourists] = useState([{ "name": "wajdi jbali", "phone": 23222564, "statut": "paid" }, { "name": "mouna jlassi", "phone": 55211778, "statut": "not paid" }])
   const [open, setOpen] = React.useState(false);
   const [openNew, setOpenNew] = useState(false)
+  const [locations, setLocations] = useState([])
   const selectOptions = {
     "paid": 'paid',
     "not paid": 'not paid',
@@ -70,9 +67,7 @@ function ProgramsTable() {
   });
   const [currentPlaceId, setCurrentPlaceId] = useState(null);
   const [newPlace, setNewPlace] = useState(null);
-  const [title, setTitle] = useState(null);
-  const [desc, setDesc] = useState(null);
-  const [star, setStar] = useState(0);
+
   const columns = [{
     dataField: 'name',
     text: 'name',
@@ -96,8 +91,15 @@ function ProgramsTable() {
     sort: true
 
   }];
-  const handleClickOpen = () => {
+  const handleClickOpen = async (id) => {
     setOpen(true);
+    await axios({
+      method: 'get',
+      url: `http://localhost:8000/locations/${id}`
+    })
+      .then(function (response) {
+        setLocations(response.data)
+      });
   };
 
   const handleClose = () => {
@@ -112,19 +114,27 @@ function ProgramsTable() {
     setCurrentPlaceId(id);
     console.log(id)
   };
+
   const getPrograms = async () => {
     await axios({
-        method: 'get',
-        url: `http://localhost:8000/programs/${localStorage.getItem('id')}`
+      method: 'get',
+      url: `http://localhost:8000/programs/${localStorage.getItem('id')}`
     })
-        .then(function (response) {
-            console.log(response)
-            setPrograms(response.data)
-        });
-}
-useEffect(()=>{
-  getPrograms()
-}, [])
+      .then(function (response) {
+        console.log(response)
+        setPrograms(response.data)
+      });
+  }
+
+  useEffect(() => {
+    getPrograms()
+  }, [])
+  useEffect(()=>{
+    getPrograms()
+  }, [openNew])
+
+
+
   return (
     <>
       <div className="content">
@@ -145,6 +155,7 @@ useEffect(()=>{
                   </thead>
                   <tbody>
                     {programs.map((prog) => {
+                      console.log(prog)
                       return (
                         <tr key={prog.id}>
                           <td>{prog.title}</td>
@@ -154,7 +165,7 @@ useEffect(()=>{
                             <Button
                               color="primary"
                               type="submit"
-                              onClick={handleClickOpen}
+                              onClick={() => { handleClickOpen(prog.id) }}
                             >
                               Details
                             </Button>
@@ -181,7 +192,7 @@ useEffect(()=>{
                               </AppBar>
                               <div className="programs-details-page">
                                 <h1 className="details-title">{prog.title}</h1>
-                                <img src={logo} className="image-details" />
+                                <img src={prog.gallery} className="image-details" />
                                 <div className="details-description">{prog.description}</div>
                                 <div>
                                   <LocalAtmIcon />
@@ -204,20 +215,19 @@ useEffect(()=>{
                                   <GroupsIcon />
                                   Total inscriptions: {prog.nbinscriptions}
                                 </div>
-                                {/*
+
                                 <div style={{ height: '100vh', width: '100%' }}>
                                   <Map
                                     initialViewState={{
-                                      longitude: 10.1815,
-                                      latitude: 36.8065,
+                                      longitude: 10.8451,
+                                      latitude: 33.8076,
                                       zoom: 10
                                     }}
                                     style={{ width: "90vw", height: "90vh" }}
                                     mapStyle="mapbox://styles/mapbox/streets-v9"
                                     mapboxAccessToken='pk.eyJ1IjoiYm9jaHJhLW16IiwiYSI6ImNsYTgzZ285OTIxeWczcW8zbThrdXptMjQifQ.DZAIWKl3ovOcWwqoB4GpmQ'
                                   >
-                                    {prog.locations.map((loc) => {
-                                      { console.log(loc.longitude) }
+                                    {locations.map((loc) => {
                                       return (
                                         <div>
                                           <Marker
@@ -233,17 +243,15 @@ useEffect(()=>{
                                               closeOnClick={false}
                                             >
                                               <div className="location-card">
-                                                <img src={logo} />
+                                                <img src={loc.image} />
                                                 <div className="location-title">
                                                   {loc.name}
                                                 </div>
                                                 <div className="location-time-category">
                                                   <div classname="location-time">
-                                                    <AccessTimeIcon style={{width: "18px"}} />    {loc.date_debut} -- {loc.date_fin}
+                                                    <AccessTimeIcon style={{ width: "18px" }} />    {loc.date_debut} -- {loc.date_fin}
                                                   </div>
-                                                  <div classname="location-category">
-                                                    {loc.category}
-                                                  </div></div>
+                                                  </div>
                                                 <div className="location-details">
                                                   {loc.details}
                                                 </div>
@@ -254,11 +262,11 @@ useEffect(()=>{
                                       )
                                     })}
                                     <NavigationControl position="top-left" />
-                      <GeolocateControl
-                        position="top-left"
-                        trackUserLocation/>
+                                    <GeolocateControl
+                                      position="top-left"
+                                      trackUserLocation />
                                   </Map>
-                                  </div>*/}
+                                </div>
                                 <h2 className="inscriptions-details">Inscriptions list</h2>
                                 <BootstrapTable keyField='name' data={tourists} columns={columns} pagination={paginationFactory()} filter={filterFactory()} />
                               </div>

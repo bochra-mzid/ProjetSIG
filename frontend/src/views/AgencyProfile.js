@@ -127,65 +127,65 @@ function AgencyProfile() {
                     onChangeIndex={handleStepChange}
                     enableMouseEvents
                   >
-                      <div >
-                        {Math.abs(activeStep - 0) <= 2 ? (
-                          <Box
-                            component="img"
-                            sx={{
-                              height: 200,
-                              display: 'block',
-                              maxWidth: 400,
-                              overflow: 'hidden',
-                              width: '100%',
-                            }}
-                            src={img1}
-                          />
-                        ) : null}
-                      </div>
-                      <div >
-                        {Math.abs(activeStep - 1) <= 2 ? (
-                          <Box
-                            component="img"
-                            sx={{
-                              height: 200,
-                              display: 'block',
-                              maxWidth: 400,
-                              overflow: 'hidden',
-                              width: '100%',
-                            }}
-                            src={img2}
-                          />
-                        ) : null}
-                      </div>
-                      <div >
-                        {Math.abs(activeStep - 2) <= 2 ? (
-                          <Box
-                            component="img"
-                            sx={{
-                              height: 200,
-                              display: 'block',
-                              maxWidth: 400,
-                              overflow: 'hidden',
-                              width: '100%',
-                            }}
-                            src={img3}
-                          />
-                        ) : null}
-                      </div><div >
-                        {Math.abs(activeStep - 3) <= 2 ? (
-                          <Box
-                            component="img"
-                            sx={{
-                              height: 200,
-                              display: 'block',
-                              maxWidth: 400,
-                              overflow: 'hidden',
-                              width: '100%',
-                            }}
-                            src={img4}
-                          />
-                        ) : null}
-                      </div>
+                    <div >
+                      {Math.abs(activeStep - 0) <= 2 ? (
+                        <Box
+                          component="img"
+                          sx={{
+                            height: 200,
+                            display: 'block',
+                            maxWidth: 400,
+                            overflow: 'hidden',
+                            width: '100%',
+                          }}
+                          src={img1}
+                        />
+                      ) : null}
+                    </div>
+                    <div >
+                      {Math.abs(activeStep - 1) <= 2 ? (
+                        <Box
+                          component="img"
+                          sx={{
+                            height: 200,
+                            display: 'block',
+                            maxWidth: 400,
+                            overflow: 'hidden',
+                            width: '100%',
+                          }}
+                          src={img2}
+                        />
+                      ) : null}
+                    </div>
+                    <div >
+                      {Math.abs(activeStep - 2) <= 2 ? (
+                        <Box
+                          component="img"
+                          sx={{
+                            height: 200,
+                            display: 'block',
+                            maxWidth: 400,
+                            overflow: 'hidden',
+                            width: '100%',
+                          }}
+                          src={img3}
+                        />
+                      ) : null}
+                    </div><div >
+                      {Math.abs(activeStep - 3) <= 2 ? (
+                        <Box
+                          component="img"
+                          sx={{
+                            height: 200,
+                            display: 'block',
+                            maxWidth: 400,
+                            overflow: 'hidden',
+                            width: '100%',
+                          }}
+                          src={img4}
+                        />
+                      ) : null}
+                    </div>
                   </AutoPlaySwipeableViews>
                   <MobileStepper
                     steps={maxSteps}
@@ -231,9 +231,9 @@ function AgencyProfile() {
                         <label>
                           Agency name
                         </label>
-                        <Input placeholder="phonee" defaultValue={agency.name} onChange={(e) => setAgency({ ...agency, name: e.target.value })} />
-                      </FormGroup>                    
-                      </Col>
+                        <Input placeholder="phone" defaultValue={agency.name} onChange={(e) => setAgency({ ...agency, name: e.target.value })} />
+                      </FormGroup>
+                    </Col>
                   </Row>
                   <Row>
                     <Col md="12">

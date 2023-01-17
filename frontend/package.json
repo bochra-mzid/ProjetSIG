@@ -10,10 +10,12 @@
     "@emotion/styled": "^11.10.4",
     "@mui/icons-material": "^5.10.9",
     "@mui/material": "^5.10.11",
+    "@mui/x-date-pickers": "^5.0.14",
     "@react-google-maps/api": "^2.13.1",
     "axios": "^1.2.1",
     "bootstrap": "^4.6.0",
     "chart.js": "3.2.1",
+    "dayjs": "^1.11.7",
     "google-map-react": "^2.2.0",
     "jquery": "3.6.0",
     "mapbox-gl": "^2.10.0",
@@ -31,6 +33,7 @@
     "react-swipeable-views": "^0.14.0",
     "reactstrap": "8.7.1",
     "sass": "1.53.0",
+    "uuid": "^9.0.0",
     "worker-loader": "^3.0.8"
   },
   "scripts": {
